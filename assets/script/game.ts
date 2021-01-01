@@ -26,6 +26,10 @@ export default class NewClass extends cc.Component {
     skin_btn: cc.Node = null;  
     @property({ type: cc.Node, tooltip: "设置按钮" })
     setting_btn: cc.Node = null;  
+    @property({ type: cc.Node, tooltip: "提示按钮" })
+    idea_btn: cc.Node = null; 
+    @property({ type: cc.Node, tooltip: "重玩按钮" })
+    replay_btn: cc.Node = null; 
 
     @property({ visible: false })
     close_menu: boolean = false;
@@ -48,11 +52,14 @@ export default class NewClass extends cc.Component {
                 cc.log("play!")
                 this.main_decorator.active = false;
                 this.game_decorator.active = true;
+                this.idea_btn.active = true;
+                this.replay_btn.active = true;
                 break;
             case "Main":
                 cc.log("return main!")
                 this.main_decorator.active = true;
                 this.game_decorator.active = false;
+                this.showBtn(this.close_menu);
                 break;
             case "Menu":
                 cc.log("Menu");
@@ -113,6 +120,19 @@ export default class NewClass extends cc.Component {
                 .to(0.4, { opacity: 255, position: cc.v3(this.menu_btn.x + interval * 4, this.menu_btn.y, 0) })
                 .start();
             
+            cc.tween(this.idea_btn)
+                .to(0.2, { opacity: 0, position: cc.v3(this.menu_btn.position.x, -540, 0) })
+                .start();
+
+            cc.tween(this.replay_btn)
+                .to(0.4, { opacity: 0, position: cc.v3(this.menu_btn.position.x, -540, 0) })
+                .call(() =>
+                {
+                    this.idea_btn.active = false;
+                    this.replay_btn.active = false;
+                })
+                .start();
+            
             this.close_menu = true;
         }
         //否则就是收起
@@ -138,6 +158,19 @@ export default class NewClass extends cc.Component {
                     this.menu_btn.getComponent(cc.Button).pressedSprite = this.menu_open_click;
                     this.activeBtn(false);
                 })
+                .start();
+            
+            cc.tween(this.idea_btn)
+                .call(() =>
+                {
+                    this.idea_btn.active = true;
+                    this.replay_btn.active = true;
+                })
+                .to(0.2, { opacity: 255, position: cc.v3(0, -540, 0) })
+                .start();
+            
+            cc.tween(this.replay_btn)
+                .to(0.2, { opacity: 255, position: cc.v3(-this.menu_btn.position.x, -540, 0) })
                 .start();
 
             this.close_menu = false;
