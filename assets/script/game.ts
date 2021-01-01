@@ -13,6 +13,8 @@ export default class NewClass extends cc.Component
     ripple_node: cc.Node = null;
     @property({ type: [cc.Node], tooltip: "三种小鱼资源" })
     fish_res: cc.Node[] = Array<cc.Node>();
+    @property({ type: [cc.Node], tooltip: "粒子资源数组" })
+    particle_res: cc.Node[] = Array<cc.Node>();
     @property({ type: [cc.Node], tooltip: "起始与结束位置" })
     pos_start: cc.Node[] = Array<cc.Node>();
     @property({ type: [cc.Node], tooltip: "途径位置1" })
@@ -31,9 +33,12 @@ export default class NewClass extends cc.Component
     @property({ visible: false })
     pre_pos: cc.Vec2 = null;
 
+    @property({ visible: false })
+    cur: number = 0;
+
     onLoad()
     {
-        this.changeScene(5);
+        this.changeScene(this.cur);
         this.playRipple();
         this.playFish();
     }
@@ -53,15 +58,16 @@ export default class NewClass extends cc.Component
         {
             case "Play":
                 cc.log("play!");
-                this.changeScene(7);
+                this.cur = (this.cur + 1) % 10;
+                this.changeScene(this.cur);
                 break;
             case "Setting":
-                cc.log("Setting!");
-                this.changeScene(8);
+                this.cur = (this.cur + 1) % 10;
+                this.changeScene(this.cur);
                 break;
             case "Skin":
-                cc.log("SKin!");
-                this.changeScene(9);
+                this.cur = (this.cur + 1) % 10;
+                this.changeScene(this.cur);
                 break;
             default:
                 cc.log("default");
@@ -75,7 +81,7 @@ export default class NewClass extends cc.Component
      */
     changeScene(num: number)
     {
-        if (num > this.bg_res.length || num > this.bg_decorator.length)
+        if (num > this.bg_res.length || num > this.bg_decorator.length || num > this.particle_res.length)
         {
             cc.log("切换场景时数组越界");
             return;
@@ -91,16 +97,25 @@ export default class NewClass extends cc.Component
                     break;
                 }
             }
-            //设置风格元素
+            //设置风格元素与粒子特效
             for (var i = 0; i < this.bg_decorator.length; i++)
             {
                 if (i == num)
                 {
                     this.bg_decorator[i].active = true;
+                    //因为有部分场景是没有粒子特效的，是null，所以要判断
+                    if (this.particle_res[i] != null)
+                    {
+                        this.particle_res[i].active = true;
+                    }
                 }
                 else
                 {
                     this.bg_decorator[i].active = false;
+                    if (this.particle_res[i] != null)
+                    {
+                        this.particle_res[i].active = false;
+                    }
                 }
             }
         }
