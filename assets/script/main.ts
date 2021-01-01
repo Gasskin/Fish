@@ -58,8 +58,7 @@ export default class NewClass extends cc.Component
         {
             case "Play":
                 cc.log("play!");
-                this.cur = (this.cur + 1) % 10;
-                this.changeScene(this.cur);
+                
                 break;
             case "Setting":
                 this.cur = (this.cur + 1) % 10;
