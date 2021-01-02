@@ -1,21 +1,24 @@
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class block extends cc.Component {
+export default class block extends cc.Component
+{
     //内部属性
     default_pos: cc.Vec2 = null;
     cur_index: cc.Vec2 = null;
     block_type: String = null;
     can_up: boolean;
+    gm_edit: boolean;
 
     onLoad()
     {
         this.bindTouchFunc();
+        this.gm_edit = this.node.getParent().getParent().getChildByName("GM").active;
+        cc.log(this.gm_edit);
     }
 
     start() 
     {
-
     }
 
     /**
@@ -54,14 +57,20 @@ export default class block extends cc.Component {
         {
             //cc.log("move");
             let move_dis: cc.Vec2 = event.getDelta();
-            //this.default_pos = cc.v2(this.default_pos.x + move_dis.x, this.default_pos.y + move_dis.y);
-            if (this.can_up)
+            if (this.gm_edit)
             {
-                this.default_pos.y += move_dis.y;
+                this.default_pos = cc.v2(this.default_pos.x + move_dis.x, this.default_pos.y + move_dis.y);
             }
             else
             {
-                this.default_pos.x += move_dis.x;
+                if (this.can_up)
+                {
+                    this.default_pos.y += move_dis.y;
+                }
+                else
+                {
+                    this.default_pos.x += move_dis.x;
+                }
             }
             this.node.setPosition(this.default_pos);
 

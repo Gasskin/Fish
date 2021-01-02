@@ -114,6 +114,7 @@
       "__id__": 1
     },
     "_enabled": true,
+    "gm_edit": null,
     "_id": ""
   },
   {
@@ -122,7 +123,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "329740b8-426c-45ab-bc2f-a968122cdf87"
+      "__uuid__": "95c41247-141f-4db1-9711-9986652f184c"
     },
     "fileId": "",
     "sync": false
