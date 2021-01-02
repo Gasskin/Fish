@@ -2,12 +2,11 @@ const {ccclass, property} = cc._decorator;
 
 @ccclass
 export default class block extends cc.Component {
-
-
     //内部属性
     default_pos: cc.Vec2 = null;
     cur_index: cc.Vec2 = null;
     block_type: String = null;
+    can_up: boolean;
 
     onLoad()
     {
@@ -25,8 +24,18 @@ export default class block extends cc.Component {
      */
     init(str: String)
     {
-        //cc.log("type:"+str);
         this.block_type = str;
+        //cc.log("type:" + str);
+        //cc.log(this.node.width);
+        //cc.log(this.node.height);
+        if (this.node.width > this.node.height)
+        {
+            this.can_up = false;
+        }
+        else
+        {
+            this.can_up = true;
+        }
     }
 
 
@@ -44,7 +53,15 @@ export default class block extends cc.Component {
         {
             //cc.log("move");
             let move_dis: cc.Vec2 = event.getDelta();
-            this.default_pos = cc.v2(this.default_pos.x + move_dis.x, this.default_pos.y + move_dis.y);
+            //this.default_pos = cc.v2(this.default_pos.x + move_dis.x, this.default_pos.y + move_dis.y);
+            if (this.can_up)
+            {
+                this.default_pos.y += move_dis.y;
+            }
+            else
+            {
+                this.default_pos.x += move_dis.x;
+            }
             this.node.setPosition(this.default_pos);
 
         }, this);

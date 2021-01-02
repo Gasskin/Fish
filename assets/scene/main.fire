@@ -14556,6 +14556,29 @@
     "item_test": {
       "__uuid__": "bed76ce0-4217-469d-acf3-474c35433124"
     },
+    "level_json": {
+      "__uuid__": "c73c0256-e191-440a-b583-600ae00fc41f"
+    },
+    "block": {
+      "__uuid__": "329740b8-426c-45ab-bc2f-a968122cdf87"
+    },
+    "game_panel": {
+      "__id__": 230
+    },
+    "block_type": [
+      {
+        "__uuid__": "47caa3ad-ee72-4691-a083-5bff327cd1d1"
+      },
+      {
+        "__uuid__": "fdacd55f-1bba-46b3-bfea-e1a48f1d071b"
+      },
+      {
+        "__uuid__": "eaaffca8-2cf4-4b25-8485-d0f67d39c408"
+      },
+      {
+        "__uuid__": "72948359-7e8d-4c98-a239-39a0abf9b7b2"
+      }
+    ],
     "_id": "bcU6mNFd1PUJkaRD8IdgHD"
   },
   {
