@@ -60,7 +60,8 @@ export default class NewClass extends cc.Component {
         this.resetBtnPos();
         this.addTestItem();
         cc.log(this.level_json.json);
-        this.loadJson(1);
+        
+        this.loadJson(2);
     }
 
     start() 
@@ -235,11 +236,11 @@ export default class NewClass extends cc.Component {
     loadJson(level:number)
     {
         let size: number = this.level_json.json[level].length;
-        cc.log(size);
+       // cc.log(size);
         for (let i: number = 0; i < size; i++)
         {
-            cc.log(this.level_json.json[level].data[i].posX);
-            cc.log(this.level_json.json[level].data[i].posY);
+            //cc.log(this.level_json.json[level].data[i].posX);
+            //cc.log(this.level_json.json[level].data[i].posY);
             this.addItem(cc.v2(Number(this.level_json.json[level].data[i].posX), Number(this.level_json.json[level].data[i].posY)),
                         this.level_json.json[level].data[i].type);
         }
@@ -259,7 +260,7 @@ export default class NewClass extends cc.Component {
 
     addItem(index: cc.Vec2, str: String)
     {
-        cc.log("addItem");
+        //cc.log("addItem");
         let block: cc.Node = cc.instantiate(this.block);
         block.setParent(this.game_panel);
         let pos: cc.Vec2 = block.getComponent("block").getItemPos(index.x, index.y);

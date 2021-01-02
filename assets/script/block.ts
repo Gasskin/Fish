@@ -25,6 +25,7 @@ export default class block extends cc.Component {
     init(str: String)
     {
         this.block_type = str;
+        this.cur_index = cc.v2(0, 0);
         //cc.log("type:" + str);
         //cc.log(this.node.width);
         //cc.log(this.node.height);

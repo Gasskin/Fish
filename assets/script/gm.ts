@@ -25,6 +25,7 @@ export default class NewClass extends cc.Component {
 
     onLoad()
     {
+        
     }
 
     start() 
@@ -56,7 +57,7 @@ export default class NewClass extends cc.Component {
      */
     addItem(index:cc.Vec2,str: String)
     {
-        cc.log("addItem");
+        //cc.log("addItem");
         let block: cc.Node = cc.instantiate(this.block);
         block.setParent(this.game_panel);
         let pos: cc.Vec2 = block.getComponent("block").getItemPos(index.x, index.y);
@@ -100,11 +101,32 @@ export default class NewClass extends cc.Component {
     {
         //cc.log("log");
         let children: cc.Node[] = this.game_panel.getComponentsInChildren("block");
+
+        let str: string = "";
+        str += "{\n";
+        str += "\"level\":\"0\",\n";
+        str += "\"length\":" + "\"" + children.length + "\",\n";
+        str += "\"data\":\n[\n";
+        
         for (let i: number = 0; i < children.length; i++)
         {
-            this.msg_map.set(children[i].cur_index,children[i].block_type);
+            str += "{\n";
+            str += "\"posX\":" + "\"" + children[i].cur_index.x + "\",\n";
+            str += "\"posY\":" + "\"" + children[i].cur_index.y + "\",\n";
+            str += "\"type\":" + "\"" + children[i].block_type + "\"\n"
+            str += "}";
+            if (i != children.length - 1)
+            {
+                str += ",\n";
+            }
+            else
+            {
+                str += "\n";
+            }
         }
-        cc.log(this.msg_map);
+        str += "]\n}";
+        cc.log(str);
+
     }
 
     // update (dt) {}
