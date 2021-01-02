@@ -61,20 +61,17 @@ export default class NewClass extends cc.Component {
         switch (type)
         {
             case "Play":
-                cc.log("play!")
                 this.main_page.active = false;
                 this.game_page.active = true;
                 this.idea_btn.active = true;
                 this.replay_btn.active = true;
                 break;
             case "Main":
-                cc.log("return main!")
                 this.main_page.active = true;
                 this.game_page.active = false;
                 this.showBtn(this.close_menu);
                 break;
             case "Menu":
-                cc.log("Menu");
                 this.showBtn(this.close_menu);
                 break;
             default:
