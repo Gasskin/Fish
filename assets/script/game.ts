@@ -61,7 +61,7 @@ export default class NewClass extends cc.Component {
         this.addTestItem();
         cc.log(this.level_json.json);
         
-        this.loadJson(2);
+        this.loadLevelJson(9);
     }
 
     start() 
@@ -233,7 +233,7 @@ export default class NewClass extends cc.Component {
      * 读取json数据，家再关卡数据
      * @param level 关卡数
      */
-    loadJson(level:number)
+    loadLevelJson(level:number)
     {
         let size: number = this.level_json.json[level].length;
        // cc.log(size);
