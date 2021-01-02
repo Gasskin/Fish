@@ -3,11 +3,13 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class NewClass extends cc.Component {
 
-    @property({ type: cc.Node, tooltip: "开始界面的修饰按钮" })
-    main_decorator: cc.Node = null;    
-    @property({ type: cc.Node, tooltip: "游戏界面的修饰按钮" })
-    game_decorator: cc.Node = null;  
+    //页面管理
+    @property({ type: cc.Node, tooltip: "主页" })
+    main_page: cc.Node = null;    
+    @property({ type: cc.Node, tooltip: "游戏页面" })
+    game_page: cc.Node = null;  
 
+    //菜单栏
     @property({ type: cc.Node, tooltip: "菜单按钮" })
     menu_btn: cc.Node = null;  
     @property({ type: cc.SpriteFrame, tooltip: "打开菜单栏nor" })
@@ -26,17 +28,27 @@ export default class NewClass extends cc.Component {
     skin_btn: cc.Node = null;  
     @property({ type: cc.Node, tooltip: "设置按钮" })
     setting_btn: cc.Node = null;  
+
+
+    //提示、重玩
     @property({ type: cc.Node, tooltip: "提示按钮" })
     idea_btn: cc.Node = null; 
     @property({ type: cc.Node, tooltip: "重玩按钮" })
     replay_btn: cc.Node = null; 
+    
+    //游戏主逻辑
+    @property({ type: cc.Node, tooltip: "方块父节点" })
+    item_bg: cc.Node = null;
+    @property({ type: cc.Prefab, tooltip: "测试方块体" })
+    item_test: cc.Prefab = null;
 
-    @property({ visible: false })
-    close_menu: boolean = false;
+    //局部变量
+    close_menu: boolean = false;//描述当前菜单栏的状态（收起/打开）
 
     onLoad()
     {
         this.resetBtnPos();
+        this.addTestItem();
     }
 
     start() 
@@ -50,15 +62,15 @@ export default class NewClass extends cc.Component {
         {
             case "Play":
                 cc.log("play!")
-                this.main_decorator.active = false;
-                this.game_decorator.active = true;
+                this.main_page.active = false;
+                this.game_page.active = true;
                 this.idea_btn.active = true;
                 this.replay_btn.active = true;
                 break;
             case "Main":
                 cc.log("return main!")
-                this.main_decorator.active = true;
-                this.game_decorator.active = false;
+                this.main_page.active = true;
+                this.game_page.active = false;
                 this.showBtn(this.close_menu);
                 break;
             case "Menu":
@@ -187,6 +199,34 @@ export default class NewClass extends cc.Component {
         this.level_btn.active = active;
         this.skin_btn.active = active;
         this.setting_btn.active = active;
+    }
+
+    /**
+     * 添加测试方块，用于位置判断
+     */
+    addTestItem()
+    {
+        for (let i: number = 0; i < 6; i++)
+        {
+            for (let j: number = 0; j < 6; j++)
+            {
+                let cur_node: cc.Node = cc.instantiate(this.item_test);
+                cur_node.getComponentInChildren(cc.Label).string = "("+i+","+j+")";
+                cur_node.setParent(this.item_bg);
+                cur_node.setPosition(this.getItemPos(i,j));
+            }
+        }
+    }
+
+
+    /**
+     * 输入数组坐标，获得对应屏幕坐标，左下角是(0,0)，右上角是(5,5)，行列都是从左下角开始算起
+     * @param x 行
+     * @param y 列
+     */
+    getItemPos(x: number, y: number): cc.Vec2
+    {
+        return cc.v2(-338 + (x + 1) * 4 + x * 108 + 54, -338 + (y + 1) * 4 + y * 108 + 54);
     }
 
     // update (dt) {}

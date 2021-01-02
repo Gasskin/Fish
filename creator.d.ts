@@ -3569,6 +3569,7 @@ declare namespace cc {
 		/** !#en Returns a normalized vector representing the forward direction (Z axis) of the node in world space.
 		!#zh 获取节点正前方（z 轴）面对的方向，返回值为世界坐标系下的归一化向量 */
 		forward: Vec3;		
+        cur_node: Prefab;
 		/**
 		
 		@param name name 
