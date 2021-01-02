@@ -1,11 +1,13 @@
 const {ccclass, property} = cc._decorator;
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class block extends cc.Component {
 
 
     //内部属性
     default_pos: cc.Vec2 = null;
+    cur_index: cc.Vec2 = null;
+    block_type: String = null;
 
     onLoad()
     {
@@ -16,6 +18,17 @@ export default class NewClass extends cc.Component {
     {
 
     }
+
+    /**
+     * 初始化木块
+     * @param str 木块类型 
+     */
+    init(str: String)
+    {
+        //cc.log("type:"+str);
+        this.block_type = str;
+    }
+
 
     /**
      * 注册木块的触摸事件
@@ -38,8 +51,8 @@ export default class NewClass extends cc.Component {
         this.node.on(cc.Node.EventType.TOUCH_END, function (event)
         {
             //cc.log("end");
-            let final_index: cc.Vec2 = this.getItemIndex(this.default_pos.x, this.default_pos.y);
-            let final_pos: cc.Vec2 = this.getItemPos(final_index.x, final_index.y);
+            this.cur_index = this.getItemIndex(this.default_pos.x, this.default_pos.y);
+            let final_pos: cc.Vec2 = this.getItemPos(this.cur_index.x, this.cur_index.y);
             this.node.setPosition(final_pos.x-54,final_pos.y-54);
         }, this);
     }
@@ -54,6 +67,11 @@ export default class NewClass extends cc.Component {
         return cc.v2(-338 + (x + 1) * 4 + x * 108 + 54, -338 + (y + 1) * 4 + y * 108 + 54);
     }
 
+    /**
+     * 根据木块坐标计算其对应的数组编号
+     * @param posX x坐标
+     * @param posY y坐标
+     */
     getItemIndex(posX: number, posY: number):cc.Vec2
     {
         let x: number = -1;

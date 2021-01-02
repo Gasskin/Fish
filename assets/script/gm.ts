@@ -16,6 +16,9 @@ export default class NewClass extends cc.Component {
     game_panel: cc.Node = null;
     @property({ type: [cc.SpriteFrame], tooltip: "block的类型，共4种" })
     block_type: cc.SpriteFrame[] = Array<cc.SpriteFrame>();
+
+    //内部属性
+    msg_map: Map<cc.Vec2,String> = new Map();
     
     // LIFE-CYCLE CALLBACKS:
 
@@ -40,6 +43,10 @@ export default class NewClass extends cc.Component {
         {
             this.addItem(str);
         }
+        else if (str == "log")
+        {
+            this.logArrMsg();
+        }
     }
 
     /**
@@ -49,31 +56,43 @@ export default class NewClass extends cc.Component {
     addItem(str: String)
     {
         let block: cc.Node = cc.instantiate(this.block);
+        block.getComponent("block").init(str);
         switch (str)
         {
             case "1x2":
-                cc.log("1x2");
+                //cc.log("1x2");
                 block.getComponent(cc.Sprite).spriteFrame = this.block_type[0];
                 block.setParent(this.game_panel);
                 break;
             case "1x3":
-                cc.log("1x3");
+                //cc.log("1x3");
                 block.getComponent(cc.Sprite).spriteFrame = this.block_type[1];
                 block.setParent(this.game_panel);
                 break;
             case "2x1":
-                cc.log("2x1");
+                //cc.log("2x1");
                 block.getComponent(cc.Sprite).spriteFrame = this.block_type[2];
                 block.setParent(this.game_panel);
                 break;
             case "3x1":
-                cc.log("3x1");
+                //cc.log("3x1");
                 block.getComponent(cc.Sprite).spriteFrame = this.block_type[3];
                 block.setParent(this.game_panel);
                 break
             default:
                 break;
         }
+    }
+
+    logArrMsg()
+    {
+        //cc.log("log");
+        let children: cc.Node[] = this.game_panel.getComponentsInChildren("block");
+        for (let i: number = 0; i < children.length; i++)
+        {
+            this.msg_map.set(children[i].cur_index,children[i].block_type);
+        }
+        cc.log(this.msg_map);
     }
 
     // update (dt) {}
