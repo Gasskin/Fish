@@ -75,7 +75,7 @@ export default class NewClass extends cc.Component {
                 block.width = 108;
                 block.height = 220;
                 block.getComponent(cc.Sprite).spriteFrame = this.block_type[0];
-                block.getComponent("block").init(str);
+                block.getComponent("block").init(str,index);
                 break;
             case "1x3":
                 //cc.log("1x3");

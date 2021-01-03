@@ -54,6 +54,7 @@ export default class NewClass extends cc.Component {
 
     //局部变量
     close_menu: boolean = false;//描述当前菜单栏的状态（收起/打开）
+    block_arr: number[][] = [];
 
     onLoad()
     {
@@ -62,9 +63,17 @@ export default class NewClass extends cc.Component {
 
         this.resetBtnPos();
         this.addTestItem();
-        cc.log(this.level_json.json);
+        //cc.log(this.level_json.json);
         
         this.loadLevelJson(9);
+
+        for (let i = 0; i < 6; i++)
+        {
+            this.block_arr[i] = [];
+        }
+
+        this.resetBlockArr();
+        this.refreshBlockArr();
     }
 
     start() 
@@ -72,6 +81,11 @@ export default class NewClass extends cc.Component {
 
     }
 
+    /**
+     * 按钮事件
+     * @param event 系统事件
+     * @param type 按钮类型
+     */
     btnAction(event: Event, type: String)
     {
         switch (type)
@@ -93,6 +107,72 @@ export default class NewClass extends cc.Component {
             default:
                 break;
         }
+    }
+
+    /**
+     * 重置木块位置数组为0
+     */
+    resetBlockArr()
+    {
+        for (let i: number = 0; i < 6; i++)
+        {
+            for (let j: number = 0; j < 6; j++)
+            {
+                this.block_arr[i][j] = 0;
+            }
+        }
+    }
+
+    /**
+     * 刷新方块数组中的数据
+     */
+    refreshBlockArr()
+    {
+        let blocks = this.game_panel.getComponentsInChildren("block");
+        for (let i = 0; i < blocks.length; i++)
+        {
+            this.block_arr[blocks[i].cur_index.x][blocks[i].cur_index.y] = 1;
+            switch (blocks[i].block_type)
+            {
+                case "1x2":
+                    this.block_arr[blocks[i].cur_index.x][blocks[i].cur_index.y + 1] = 1;
+                    break;
+                case "1x3":
+                    this.block_arr[blocks[i].cur_index.x][blocks[i].cur_index.y + 1] = 1;
+                    this.block_arr[blocks[i].cur_index.x][blocks[i].cur_index.y + 2] = 1;
+                    break;
+                case "2x1":
+                    this.block_arr[blocks[i].cur_index.x + 1][blocks[i].cur_index.y] = 1;
+                    break;
+                case "3x1":
+                    this.block_arr[blocks[i].cur_index.x + 1][blocks[i].cur_index.y] = 1;
+                    this.block_arr[blocks[i].cur_index.x + 2][blocks[i].cur_index.y] = 1;
+                    break;
+            }
+        }
+        //逆时针旋转木块数据矩阵
+        //1.水平对换
+        let temp: number = 0;
+        for (let i:number = 0; i < 6; i++)
+        {
+            for (let j: number = 0; j < 3; j++)
+            {
+                temp = this.block_arr[i][j];
+                this.block_arr[i][j] = this.block_arr[i][5 - j];
+                this.block_arr[i][5 - j] = temp;
+            }
+        }
+        // //2.对角线翻折
+        for (let i: number = 0; i < 6; i++)
+        {
+            for (let j: number = 0; j < i; j++)
+            {
+                temp = this.block_arr[i][j];
+                this.block_arr[i][j] = this.block_arr[j][i];
+                this.block_arr[j][i] = temp;
+            }
+        }
+        cc.log(this.block_arr);
     }
 
     /**
@@ -266,11 +346,16 @@ export default class NewClass extends cc.Component {
     }
 
 
+    /**
+     * 添加一个木块到game_panel
+     * @param index 木块的数组编号
+     * @param str 添加的木块类型
+     */
     addItem(index: cc.Vec2, str: String)
     {
-        //cc.log("addItem");
         let block: cc.Node = cc.instantiate(this.block);
         block.setParent(this.game_panel);
+
         let pos: cc.Vec2 = block.getComponent("block").getItemPos(index.x, index.y);
         block.setPosition(pos.x - 54, pos.y - 54);
         switch (str)
@@ -280,27 +365,27 @@ export default class NewClass extends cc.Component {
                 block.width = 108;
                 block.height = 220;
                 block.getComponent(cc.Sprite).spriteFrame = this.block_type[0];
-                block.getComponent("block").init(str);
+                block.getComponent("block").init(str, index);
                 break;
             case "1x3":
                 //cc.log("1x3");
                 block.width = 108;
                 block.height = 332;
                 block.getComponent(cc.Sprite).spriteFrame = this.block_type[1];
-                block.getComponent("block").init(str);
+                block.getComponent("block").init(str, index);
                 break;
             case "2x1":
                 //cc.log("2x1");
                 block.width = 220;
                 block.height = 108;
-                block.getComponent("block").init(str);
+                block.getComponent("block").init(str, index);
                 block.getComponent(cc.Sprite).spriteFrame = this.block_type[2];
                 break;
             case "3x1":
                 //cc.log("3x1");
                 block.width = 332;
                 block.height = 108;
-                block.getComponent("block").init(str);
+                block.getComponent("block").init(str, index);
                 block.getComponent(cc.Sprite).spriteFrame = this.block_type[3];
                 break
             default:

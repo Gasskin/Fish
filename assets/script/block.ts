@@ -4,12 +4,16 @@ const {ccclass, property} = cc._decorator;
 export default class block extends cc.Component
 {
     //内部属性
-    default_pos: cc.Vec2 = null;
-    cur_index: cc.Vec2 = null;
-    block_type: String = null;
-    can_up: boolean;
-    gm_edit: boolean;
-
+    default_pos: cc.Vec2 = null;//当前位置
+    cur_index: cc.Vec2 = null;//当前坐标
+    block_type: String = null;//木块类型
+    can_up: boolean;//属于上下移动还是左右移动
+    gm_edit: boolean;//GM面板是否打开
+    max_up: number = null;//能够向上移动的距离
+    max_bottom: number = null;//能够向下移动的距离
+    max_left: number = null;//能够想左移动的距离
+    max_right: number = null;//能够向右移动的距离
+    
     onLoad()
     {
         this.bindTouchFunc();
@@ -25,10 +29,10 @@ export default class block extends cc.Component
      * 初始化木块
      * @param str 木块类型 
      */
-    init(str: String)
+    init(str: String, index: cc.Vec2)
     {
         this.block_type = str;
-        this.cur_index = cc.v2(0, 0);
+        this.cur_index = index;
         //cc.log("type:" + str);
         //cc.log(this.node.width);
         //cc.log(this.node.height);
@@ -53,6 +57,7 @@ export default class block extends cc.Component
             //cc.log("start");
             this.default_pos = this.node.getPosition();
         }, this);
+
         this.node.on(cc.Node.EventType.TOUCH_MOVE, function (event)
         {
             //cc.log("move");
@@ -155,12 +160,18 @@ export default class block extends cc.Component
             this.node.setPosition(this.default_pos);
 
         }, this);
+
         this.node.on(cc.Node.EventType.TOUCH_END, function (event)
         {
             //cc.log("end");
             this.cur_index = this.getItemIndex(this.default_pos.x, this.default_pos.y);
             let final_pos: cc.Vec2 = this.getItemPos(this.cur_index.x, this.cur_index.y);
-            this.node.setPosition(final_pos.x-54,final_pos.y-54);
+            //this.node.setPosition(final_pos.x - 54, final_pos.y - 54);
+            cc.tween(this.node)
+                .to(0.2, { position: cc.v2(final_pos.x - 54, final_pos.y - 54) })
+                .start();
+            
+            
         }, this);
     }
 
