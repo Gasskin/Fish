@@ -16,6 +16,8 @@ export default class NewClass extends cc.Component {
     game_panel: cc.Node = null;
     @property({ type: [cc.SpriteFrame], tooltip: "block的类型，共4种" })
     block_type: cc.SpriteFrame[] = Array<cc.SpriteFrame>();
+    @property({ type: cc.JsonAsset, tooltip: "关卡数据" })
+    level_json: cc.JsonAsset = null;
 
     //内部属性
     msg_map: Map<cc.Vec2, String> = new Map();
@@ -47,6 +49,10 @@ export default class NewClass extends cc.Component {
         else if (str == "log")
         {
             this.logArrMsg();
+        }
+        else if (str == "clear")
+        {
+            this.clearPanel();
         }
     }
 
@@ -97,6 +103,9 @@ export default class NewClass extends cc.Component {
         }
     }
 
+    /**
+     * 打印编辑好的关卡信息，json数据
+     */
     logArrMsg()
     {
         //cc.log("log");
@@ -104,16 +113,16 @@ export default class NewClass extends cc.Component {
 
         let str: string = "";
         str += "{\n";
-        str += "\"level\":\"0\",\n";
-        str += "\"length\":" + "\"" + children.length + "\",\n";
+        str += "\"level\":"+ (this.level_json.json.length+1) +",\n";
+        str += "\"length\":" + children.length + ",\n";
         str += "\"data\":\n[\n";
         
         for (let i: number = 0; i < children.length; i++)
         {
             str += "{\n";
-            str += "\"posX\":" + "\"" + children[i].cur_index.x + "\",\n";
-            str += "\"posY\":" + "\"" + children[i].cur_index.y + "\",\n";
-            str += "\"type\":" + "\"" + children[i].block_type + "\"\n"
+            str += "\"posX\":"  + children[i].cur_index.x + ",\n";
+            str += "\"posY\":"  + children[i].cur_index.y + ",\n";
+            str += "\"type\":"  + children[i].block_type + "\n"
             str += "}";
             if (i != children.length - 1)
             {
@@ -127,6 +136,25 @@ export default class NewClass extends cc.Component {
         str += "]\n}";
         cc.log(str);
 
+    }
+
+    /**
+     * 删除木块节点
+     */
+    clearPanel()
+    {
+        for (let child of this.game_panel.children)
+        {
+            // if (child.getComponent("block"))
+            // {
+            //     this.game_panel.removeChild(child);
+            // }
+            if (child.name == "block")
+            {
+                //cc.log(child);
+                child.destroy();
+            }
+        }
     }
 
     // update (dt) {}
