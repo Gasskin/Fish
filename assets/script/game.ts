@@ -65,14 +65,14 @@ export default class NewClass extends cc.Component {
         this.addTestItem();
         //cc.log(this.level_json.json);
         
-        this.loadLevelJson(9);
+        this.loadLevelJson(0);
 
         for (let i = 0; i < 6; i++)
         {
             this.block_arr[i] = [];
         }
 
-        this.resetBlockArr();
+        //this.resetBlockArr();
         this.refreshBlockArr();
     }
 
@@ -128,6 +128,7 @@ export default class NewClass extends cc.Component {
      */
     refreshBlockArr()
     {
+        this.resetBlockArr();
         let blocks = this.game_panel.getComponentsInChildren("block");
         for (let i = 0; i < blocks.length; i++)
         {
@@ -172,7 +173,7 @@ export default class NewClass extends cc.Component {
                 this.block_arr[j][i] = temp;
             }
         }
-        cc.log(this.block_arr);
+        //cc.log(this.block_arr);
     }
 
     /**
@@ -324,8 +325,8 @@ export default class NewClass extends cc.Component {
             cc.log("超出最大关卡数，加载失败");
             return;
         }
-       // cc.log(size);
-        for (let i: number = 0; i < size; i++)
+        //cc.log(size);
+        for (let i: number = 0; i < this.level_json.json[level].length; i++)
         {
             //cc.log(this.level_json.json[level].data[i].posX);
             //cc.log(this.level_json.json[level].data[i].posY);

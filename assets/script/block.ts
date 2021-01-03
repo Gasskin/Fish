@@ -7,11 +7,11 @@ export default class block extends cc.Component
     default_pos: cc.Vec2 = null;//当前位置
     cur_index: cc.Vec2 = null;//当前坐标
     block_type: String = null;//木块类型
-    can_up: boolean;//属于上下移动还是左右移动
+    //can_up: boolean;//属于上下移动还是左右移动
     gm_edit: boolean;//GM面板是否打开
     max_up: number = null;//能够向上移动的距离
-    max_bottom: number = null;//能够向下移动的距离
-    max_left: number = null;//能够想左移动的距离
+    min_bottom: number = null;//能够向下移动的距离
+    min_left: number = null;//能够向左移动的距离
     max_right: number = null;//能够向右移动的距离
     
     onLoad()
@@ -36,16 +36,116 @@ export default class block extends cc.Component
         //cc.log("type:" + str);
         //cc.log(this.node.width);
         //cc.log(this.node.height);
-        if (this.node.width > this.node.height)
-        {
-            this.can_up = false;
-        }
-        else
-        {
-            this.can_up = true;
-        }
+
+        // if (this.node.width > this.node.height)
+        // {
+        //     this.can_up = false;
+        // }
+        // else
+        // {
+        //     this.can_up = true;
+        // }
     }
 
+    /**
+     * 计算当前木块可以移动的距离
+     */
+    getCanMoveDis()
+    {
+        let arr: number[][] = this.node.parent.parent.getComponent("game").block_arr;
+        let x: number = (5 - this.cur_index.y);
+        let y: number = this.cur_index.x;
+        //cc.log("(" + x + "," + y + ")");
+        //cc.log(arr);
+        let i: number = 0;
+        switch (this.block_type)
+        {
+            case "1x2":
+                //计算能够向下移动的块数
+                for (i = 1; i <= 4; i++)
+                {
+                    if ((x + i > 5) || (arr[x + i][y] == 1))
+                    {
+                        break;
+                    }
+                }
+                this.min_bottom = i - 1;
+                //计算能够向上移动的距离
+                for (i = 1; i <= 4; i++)
+                {
+                    if ((x - 1 - i < 0) || (arr[x - 1 - i][y] == 1))
+                    {
+                        break;
+                    }
+                }
+                this.max_up = i - 1;
+                cc.log("bottom:" + this.min_bottom + " up:" + this.max_up);
+                break;
+            case "1x3":
+                //计算能够向下移动的块数
+                for (i = 1; i <= 3; i++)
+                {
+                    if ((x + i > 5) || (arr[x + i][y] == 1))
+                    {
+                        break;
+                    }
+                }
+                this.min_bottom = i - 1;
+                //计算能够向上移动的距离
+                for (i = 1; i <= 4; i++)
+                {
+                    if ((x - 2 - i < 0) || (arr[x - 2 - i][y] == 1))
+                    {
+                        break;
+                    }
+                }
+                this.max_up = i - 1;
+                cc.log("bottom:" + this.min_bottom + " up:" + this.max_up);
+                break;
+            case "2x1":
+                //计算能够向右移动的块数
+                for (i = 1; i <= 4; i++)
+                {
+                    if ((y + 1 + i > 5) || (arr[x][y + 1 + i] == 1))
+                    {
+                        break;
+                    }
+                }
+                this.max_right = i - 1;
+                //计算能够向左移动的距离
+                for (i = 1; i <= 4; i++)
+                {
+                    if ((y - i < 0) || (arr[x][y - i] == 1))
+                    {
+                        break;
+                    }
+                }
+                this.min_left = i - 1;
+                cc.log("left:" + this.min_left + " right:" + this.max_right);
+                break;
+            case "3x1":
+                //计算能够向右移动的块数
+                for (i = 1; i <= 3; i++)
+                {
+                    if ((y + 2 + i > 5) || (arr[x][y + 2 + i] == 1))
+                    {
+                        break;
+                    }
+                }
+                this.max_right = i - 1;
+                //计算能够向左移动的距离
+                for (i = 1; i <= 3; i++)
+                {
+                    if ((y - i < 0) || (arr[x][y - i] == 1))
+                    {
+                        break;
+                    }
+                }
+                this.min_left = i - 1;
+                cc.log("left:" + this.min_left + " right:" + this.max_right);
+                break;
+        }
+    }
 
     /**
      * 注册木块的触摸事件
@@ -56,6 +156,7 @@ export default class block extends cc.Component
         {
             //cc.log("start");
             this.default_pos = this.node.getPosition();
+            this.getCanMoveDis()
         }, this);
 
         this.node.on(cc.Node.EventType.TOUCH_MOVE, function (event)
@@ -68,94 +169,176 @@ export default class block extends cc.Component
             }
             else
             {
-                //上下移动
-                if (this.can_up)
                 {
-                    //1x2的木块y移动范围是[0,4]，1x3的木块y移动范围是[0,3]
-                    switch (this.block_type)
-                    {
-                        case "1x2":
-                            //如果是向上移动
-                            if (move_dis.y > 0)
-                            {
-                                if (this.default_pos.y <= this.getItemPos(0, 4).y - 54)
-                                {
-                                    this.default_pos.y += move_dis.y;
-                                }
-                            }
-                            //否则是向下移动
-                            else
-                            {
-                                if (this.default_pos.y >= -334)
-                                {
-                                    this.default_pos.y += move_dis.y;
-                                }
-                            }
-                            break;
-                        case "1x3":
-                            //如果是向上移动
-                            if (move_dis.y > 0)
-                            {
-                                if (this.default_pos.y <= this.getItemPos(0,3).y-54)
-                                {
-                                    this.default_pos.y += move_dis.y;
-                                }
-                            }
-                            //否则是向下移动
-                            else
-                            {
-                                if (this.default_pos.y >= -334)
-                                {
-                                    this.default_pos.y += move_dis.y;
-                                }
-                            }
-                            break;
-                    }
+                //#region 
+                // //上下移动
+                // if (this.can_up)
+                // {
+                //     //1x2的木块y移动范围是[0,4]，1x3的木块y移动范围是[0,3]
+                //     switch (this.block_type)
+                //     {
+                //         case "1x2":
+                //             //如果是向上移动
+                //             if (move_dis.y > 0)
+                //             {
+                //                 if (this.default_pos.y <= this.getItemPos(0, 4).y - 54)
+                //                 {
+                //                     this.default_pos.y += move_dis.y;
+                //                 }
+                //             }
+                //             //否则是向下移动
+                //             else
+                //             {
+                //                 if (this.default_pos.y >= -334)
+                //                 {
+                //                     this.default_pos.y += move_dis.y;
+                //                 }
+                //             }
+                //             break;
+                //         case "1x3":
+                //             //如果是向上移动
+                //             if (move_dis.y > 0)
+                //             {
+                //                 if (this.default_pos.y <= this.getItemPos(0,3).y-54)
+                //                 {
+                //                     this.default_pos.y += move_dis.y;
+                //                 }
+                //             }
+                //             //否则是向下移动
+                //             else
+                //             {
+                //                 if (this.default_pos.y >= -334)
+                //                 {
+                //                     this.default_pos.y += move_dis.y;
+                //                 }
+                //             }
+                //             break;
+                //     }
+                // }
+                // //左右移动
+                // else
+                // {
+                //     //1x2的木块x移动范围是[0,4]，1x3的木块x移动范围是[0,3]
+                //     switch (this.block_type)
+                //     {
+                //         case "2x1":
+                //             //如果是向右移动
+                //             if (move_dis.x > 0)
+                //             {
+                //                 if (this.default_pos.x <= this.getItemPos(4, 0).x - 54)
+                //                 {
+                //                     this.default_pos.x += move_dis.x;
+                //                 }
+                //             }
+                //             //否则是向左移动
+                //             else
+                //             {
+                //                 if (this.default_pos.x >= -334)
+                //                 {
+                //                     this.default_pos.x += move_dis.x;
+                //                 }
+                //             }
+                //             break;
+                //         case "3x1":
+                //             //如果是向右移动
+                //             if (move_dis.x > 0)
+                //             {
+                //                 if (this.default_pos.x <= this.getItemPos(3, 0).x - 54)
+                //                 {
+                //                     this.default_pos.x += move_dis.x;
+                //                 }
+                //             }
+                //             //否则是向左移动
+                //             else
+                //             {
+                //                 if (this.default_pos.x >= -334)
+                //                 {
+                //                     this.default_pos.x += move_dis.x;
+                //                 }
+                //             }
+                //             break;
+                //     }
+                // }
                 }
-                //左右移动
-                else
+
+                //1x2的木块y移动范围是[0,4]，1x3的木块y移动范围是[0,3]
+                switch (this.block_type)
                 {
-                    //1x2的木块x移动范围是[0,4]，1x3的木块x移动范围是[0,3]
-                    switch (this.block_type)
-                    {
-                        case "2x1":
-                            //如果是向右移动
-                            if (move_dis.x > 0)
+                    case "1x2":
+                        //如果是向上移动
+                        if (move_dis.y > 0)
+                        {
+                            if (this.default_pos.y <= Math.min(this.getItemPos(0, 4).y - 54, this.getItemPos(0, this.cur_index.y + this.max_up).y - 54))
                             {
-                                if (this.default_pos.x <= this.getItemPos(4, 0).x - 54)
-                                {
-                                    this.default_pos.x += move_dis.x;
-                                }
+                                this.default_pos.y += move_dis.y;
                             }
-                            //否则是向左移动
-                            else
+                        }
+                        //否则是向下移动
+                        else
+                        {
+                            if (this.default_pos.y >= Math.max(-334, this.getItemPos(0, this.cur_index.y - this.min_bottom).y - 54))
                             {
-                                if (this.default_pos.x >= -334)
-                                {
-                                    this.default_pos.x += move_dis.x;
-                                }
+                                this.default_pos.y += move_dis.y;
                             }
-                            break;
-                        case "3x1":
-                            //如果是向右移动
-                            if (move_dis.x > 0)
+                        }
+                        break;
+                    case "1x3":
+                        //如果是向上移动
+                        if (move_dis.y > 0)
+                        {
+                            if (this.default_pos.y <= Math.min(this.getItemPos(0, 3).y - 54, this.getItemPos(0, this.cur_index.y + this.max_up).y - 54))
                             {
-                                if (this.default_pos.x <= this.getItemPos(3, 0).x - 54)
-                                {
-                                    this.default_pos.x += move_dis.x;
-                                }
+                                this.default_pos.y += move_dis.y;
                             }
-                            //否则是向左移动
-                            else
+                        }
+                        //否则是向下移动
+                        else
+                        {
+                            if (this.default_pos.y >= Math.max(-334, this.getItemPos(0, this.cur_index.y - this.min_bottom).y - 54))
                             {
-                                if (this.default_pos.x >= -334)
-                                {
-                                    this.default_pos.x += move_dis.x;
-                                }
+                                this.default_pos.y += move_dis.y;
                             }
-                            break;
-                    }
+                        }
+                        break;
+
+                    case "2x1":
+                        //如果是向右移动
+                        if (move_dis.x > 0)
+                        {
+                            if (this.default_pos.x <= Math.min(this.getItemPos(4, 0).x - 54, this.getItemPos(this.cur_index.x + this.max_right, 0).x - 54))
+                            {
+                                this.default_pos.x += move_dis.x;
+                            }
+                        }
+                        //否则是向左移动
+                        else
+                        {
+                            if (this.default_pos.x >= Math.max(-334, this.getItemPos(this.cur_index.x - this.min_left, 0).x - 54))
+                            {
+                                this.default_pos.x += move_dis.x;
+                            }
+                        }
+                        break;
+                    case "3x1":
+                        //如果是向右移动
+                        if (move_dis.x > 0)
+                        {
+                            if (this.default_pos.x <= Math.min(this.getItemPos(3, 0).x - 54, this.getItemPos(this.cur_index.x + this.max_right, 0).x - 54))
+                            {
+                                this.default_pos.x += move_dis.x;
+                            }
+                        }
+                        //否则是向左移动
+                        else
+                        {
+                            if (this.default_pos.x >= Math.max(-334, this.getItemPos(this.cur_index.x - this.min_left, 0).x - 54))
+                            {
+                                this.default_pos.x += move_dis.x;
+                            }
+                        }
+                        break;
                 }
+                   
             }
             this.node.setPosition(this.default_pos);
 
@@ -167,6 +350,7 @@ export default class block extends cc.Component
             this.cur_index = this.getItemIndex(this.default_pos.x, this.default_pos.y);
             let final_pos: cc.Vec2 = this.getItemPos(this.cur_index.x, this.cur_index.y);
             //this.node.setPosition(final_pos.x - 54, final_pos.y - 54);
+            this.node.parent.parent.getComponent("game").refreshBlockArr();
             cc.tween(this.node)
                 .to(0.2, { position: cc.v2(final_pos.x - 54, final_pos.y - 54) })
                 .start();
