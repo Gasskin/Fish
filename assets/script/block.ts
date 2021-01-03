@@ -14,7 +14,7 @@ export default class block extends cc.Component
     {
         this.bindTouchFunc();
         this.gm_edit = this.node.getParent().getParent().getChildByName("GM").active;
-        cc.log(this.gm_edit);
+        //cc.log(this.gm_edit);
     }
 
     start() 
@@ -63,13 +63,93 @@ export default class block extends cc.Component
             }
             else
             {
+                //上下移动
                 if (this.can_up)
                 {
-                    this.default_pos.y += move_dis.y;
+                    //1x2的木块y移动范围是[0,4]，1x3的木块y移动范围是[0,3]
+                    switch (this.block_type)
+                    {
+                        case "1x2":
+                            //如果是向上移动
+                            if (move_dis.y > 0)
+                            {
+                                if (this.default_pos.y <= this.getItemPos(0, 4).y - 54)
+                                {
+                                    this.default_pos.y += move_dis.y;
+                                }
+                            }
+                            //否则是向下移动
+                            else
+                            {
+                                if (this.default_pos.y >= -334)
+                                {
+                                    this.default_pos.y += move_dis.y;
+                                }
+                            }
+                            break;
+                        case "1x3":
+                            //如果是向上移动
+                            if (move_dis.y > 0)
+                            {
+                                if (this.default_pos.y <= this.getItemPos(0,3).y-54)
+                                {
+                                    this.default_pos.y += move_dis.y;
+                                }
+                            }
+                            //否则是向下移动
+                            else
+                            {
+                                if (this.default_pos.y >= -334)
+                                {
+                                    this.default_pos.y += move_dis.y;
+                                }
+                            }
+                            break;
+                    }
                 }
+                //左右移动
                 else
                 {
-                    this.default_pos.x += move_dis.x;
+                    //1x2的木块x移动范围是[0,4]，1x3的木块x移动范围是[0,3]
+                    switch (this.block_type)
+                    {
+                        case "2x1":
+                            //如果是向右移动
+                            if (move_dis.x > 0)
+                            {
+                                if (this.default_pos.x <= this.getItemPos(4, 0).x - 54)
+                                {
+                                    this.default_pos.x += move_dis.x;
+                                }
+                            }
+                            //否则是向左移动
+                            else
+                            {
+                                if (this.default_pos.x >= -334)
+                                {
+                                    this.default_pos.x += move_dis.x;
+                                }
+                            }
+                            break;
+                        case "3x1":
+                            //如果是向右移动
+                            if (move_dis.x > 0)
+                            {
+                                if (this.default_pos.x <= this.getItemPos(3, 0).x - 54)
+                                {
+                                    this.default_pos.x += move_dis.x;
+                                }
+                            }
+                            //否则是向左移动
+                            else
+                            {
+                                if (this.default_pos.x >= -334)
+                                {
+                                    this.default_pos.x += move_dis.x;
+                                }
+                            }
+                            break;
+                    }
                 }
             }
             this.node.setPosition(this.default_pos);

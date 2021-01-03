@@ -57,6 +57,9 @@ export default class NewClass extends cc.Component {
 
     onLoad()
     {
+        //碰撞检测
+        //cc.director.getCollisionManager().enabled = true;
+
         this.resetBtnPos();
         this.addTestItem();
         cc.log(this.level_json.json);
@@ -235,13 +238,18 @@ export default class NewClass extends cc.Component {
      */
     loadLevelJson(level:number)
     {
-        let size: number = this.level_json.json[level].length;
+        let size: number = this.level_json.json.length;
+        if (level >= size)
+        {
+            cc.log("超出最大关卡数，加载失败");
+            return;
+        }
        // cc.log(size);
         for (let i: number = 0; i < size; i++)
         {
             //cc.log(this.level_json.json[level].data[i].posX);
             //cc.log(this.level_json.json[level].data[i].posY);
-            this.addItem(cc.v2(Number(this.level_json.json[level].data[i].posX), Number(this.level_json.json[level].data[i].posY)),
+            this.addItem(cc.v2(this.level_json.json[level].data[i].posX,this.level_json.json[level].data[i].posY),
                         this.level_json.json[level].data[i].type);
         }
     }

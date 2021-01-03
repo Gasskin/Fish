@@ -5,417 +5,417 @@
         "data":
         [
             {
-                "posX":"0",
-                "posY":"3",
+                "posX":0,
+                "posY":3,
                 "type": "2x1"
             },
             {
-                "posX": "1",
-                "posY": "1",
+                "posX": 1,
+                "posY": 1,
                 "type": "1x2"
             },
             {
-                "posX": "3",
-                "posY": "1",
+                "posX": 3,
+                "posY": 1,
                 "type": "1x3"
             },
             {
-                "posX": "5",
-                "posY": "2",
+                "posX": 5,
+                "posY": 2,
                 "type": "1x3"
             },
             {
-                "posX": "4",
-                "posY": "5",
+                "posX": 4,
+                "posY": 5,
                 "type": "2x1"
             },
             {
-                "posX": "2",
-                "posY": "0",
+                "posX": 2,
+                "posY": 0,
                 "type": "3x1"
             },
             {
-                "posX": "1",
-                "posY": "5",
-                "type": "3x1"
-            }
-        ]
-    },
-    {
-        "level": "2",
-        "length": "7",
-        "data": [
-            {
-                "posX": "1",
-                "posY": "3",
-                "type": "2x1"
-            },
-            {
-                "posX": "4",
-                "posY": "1",
-                "type": "1x2"
-            },
-            {
-                "posX": "1",
-                "posY": "1",
-                "type": "1x2"
-            },
-            {
-                "posX": "0",
-                "posY": "2",
-                "type": "1x2"
-            },
-            {
-                "posX": "4",
-                "posY": "3",
-                "type": "2x1"
-            },
-            {
-                "posX": "3",
-                "posY": "2",
-                "type": "1x3"
-            },
-            {
-                "posX": "2",
-                "posY": "5",
+                "posX": 1,
+                "posY": 5,
                 "type": "3x1"
             }
         ]
     },
     {
-        "level": "3",
-        "length": "6",
+        "level": 2,
+        "length": 7,
         "data": [
             {
-                "posX": "0",
-                "posY": "3",
+                "posX": 1,
+                "posY": 3,
                 "type": "2x1"
             },
             {
-                "posX": "3",
-                "posY": "3",
+                "posX": 4,
+                "posY": 1,
                 "type": "1x2"
             },
             {
-                "posX": "5",
-                "posY": "4",
+                "posX": 1,
+                "posY": 1,
                 "type": "1x2"
             },
             {
-                "posX": "2",
-                "posY": "1",
+                "posX": 0,
+                "posY": 2,
+                "type": "1x2"
+            },
+            {
+                "posX": 4,
+                "posY": 3,
                 "type": "2x1"
             },
             {
-                "posX": "5",
-                "posY": "1",
+                "posX": 3,
+                "posY": 2,
                 "type": "1x3"
             },
             {
-                "posX": "2",
-                "posY": "2",
-                "type": "1x3"
-            }
-        ]
-    },
-    {
-        "level": "4",
-        "length": "6",
-        "data": [
-            {
-                "posX": "0",
-                "posY": "3",
-                "type": "2x1"
-            },
-            {
-                "posX": "4",
-                "posY": "0",
-                "type": "1x2"
-            },
-            {
-                "posX": "5",
-                "posY": "3",
-                "type": "1x2"
-            },
-            {
-                "posX": "1",
-                "posY": "1",
-                "type": "2x1"
-            },
-            {
-                "posX": "3",
-                "posY": "1",
-                "type": "1x3"
-            },
-            {
-                "posX": "0",
-                "posY": "5",
+                "posX": 2,
+                "posY": 5,
                 "type": "3x1"
             }
         ]
     },
     {
-        "level": "5",
-        "length": "7",
+        "level": 3,
+        "length": 6,
         "data": [
             {
-                "posX": "0",
-                "posY": "3",
+                "posX": 0,
+                "posY": 3,
                 "type": "2x1"
             },
             {
-                "posX": "3",
-                "posY": "4",
+                "posX": 3,
+                "posY": 3,
                 "type": "1x2"
             },
             {
-                "posX": "1",
-                "posY": "1",
+                "posX": 5,
+                "posY": 4,
                 "type": "1x2"
             },
             {
-                "posX": "3",
-                "posY": "1",
+                "posX": 2,
+                "posY": 1,
                 "type": "2x1"
             },
             {
-                "posX": "0",
-                "posY": "5",
-                "type": "2x1"
-            },
-            {
-                "posX": "5",
-                "posY": "1",
+                "posX": 5,
+                "posY": 1,
                 "type": "1x3"
             },
             {
-                "posX": "3",
-                "posY": "0",
+                "posX": 2,
+                "posY": 2,
+                "type": "1x3"
+            }
+        ]
+    },
+    {
+        "level": 4,
+        "length": 6,
+        "data": [
+            {
+                "posX": 0,
+                "posY": 3,
+                "type": "2x1"
+            },
+            {
+                "posX": 4,
+                "posY": 0,
+                "type": "1x2"
+            },
+            {
+                "posX": 5,
+                "posY": 3,
+                "type": "1x2"
+            },
+            {
+                "posX": 1,
+                "posY": 1,
+                "type": "2x1"
+            },
+            {
+                "posX": 3,
+                "posY": 1,
+                "type": "1x3"
+            },
+            {
+                "posX": 0,
+                "posY": 5,
                 "type": "3x1"
             }
         ]
     },
     {
-        "level": "6",
-        "length": "5",
+        "level": 5,
+        "length": 7,
         "data": [
             {
-                "posX": "0",
-                "posY": "3",
+                "posX": 0,
+                "posY": 3,
                 "type": "2x1"
             },
             {
-                "posX": "2",
-                "posY": "2",
+                "posX": 3,
+                "posY": 4,
                 "type": "1x2"
             },
             {
-                "posX": "4",
-                "posY": "1",
+                "posX": 1,
+                "posY": 1,
+                "type": "1x2"
+            },
+            {
+                "posX": 3,
+                "posY": 1,
                 "type": "2x1"
             },
             {
-                "posX": "4",
-                "posY": "2",
+                "posX": 0,
+                "posY": 5,
+                "type": "2x1"
+            },
+            {
+                "posX": 5,
+                "posY": 1,
                 "type": "1x3"
             },
             {
-                "posX": "0",
-                "posY": "4",
+                "posX": 3,
+                "posY": 0,
                 "type": "3x1"
             }
         ]
     },
     {
-        "level": "7",
-        "length": "8",
+        "level": 6,
+        "length": 5,
         "data": [
             {
-                "posX": "0",
-                "posY": "3",
+                "posX": 0,
+                "posY": 3,
                 "type": "2x1"
             },
             {
-                "posX": "0",
-                "posY": "0",
-                "type": "2x1"
-            },
-            {
-                "posX": "0",
-                "posY": "1",
-                "type": "2x1"
-            },
-            {
-                "posX": "0",
-                "posY": "5",
-                "type": "2x1"
-            },
-            {
-                "posX": "3",
-                "posY": "5",
-                "type": "2x1"
-            },
-            {
-                "posX": "5",
-                "posY": "3",
+                "posX": 2,
+                "posY": 2,
                 "type": "1x2"
             },
             {
-                "posX": "3",
-                "posY": "3",
-                "type": "1x2"
-            },
-            {
-                "posX": "3",
-                "posY": "2",
-                "type": "3x1"
-            }
-        ]
-    },
-    {
-        "level": "8",
-        "length": "6",
-        "data": [
-            {
-                "posX": "1",
-                "posY": "3",
+                "posX": 4,
+                "posY": 1,
                 "type": "2x1"
             },
             {
-                "posX": "0",
-                "posY": "0",
-                "type": "2x1"
-            },
-            {
-                "posX": "4",
-                "posY": "2",
-                "type": "2x1"
-            },
-            {
-                "posX": "0",
-                "posY": "3",
-                "type": "1x2"
-            },
-            {
-                "posX": "4",
-                "posY": "3",
+                "posX": 4,
+                "posY": 2,
                 "type": "1x3"
-            },
-            {
-                "posX": "2",
-                "posY": "0",
-                "type": "1x3"
-            }
-        ]
-    },
-    {
-        "level": "9",
-        "length": "8",
-        "data": [
-            {
-                "posX": "0",
-                "posY": "3",
-                "type": "2x1"
-            },
-            {
-                "posX": "2",
-                "posY": "2",
-                "type": "2x1"
             },
             {
                 "posX": "0",
                 "posY": "4",
-                "type": "2x1"
-            },
-            {
-                "posX": "2",
-                "posY": "4",
-                "type": "1x2"
-            },
-            {
-                "posX": "1",
-                "posY": "0",
-                "type": "1x2"
-            },
-            {
-                "posX": "4",
-                "posY": "2",
-                "type": "1x3"
-            },
-            {
-                "posX": "5",
-                "posY": "0",
-                "type": "1x3"
-            },
-            {
-                "posX": "2",
-                "posY": "0",
                 "type": "3x1"
             }
         ]
     },
     {
-        "level": "10",
-        "length": "12",
+        "level": 7,
+        "length": 8,
         "data": [
             {
-                "posX": "2",
-                "posY": "3",
+                "posX": 0,
+                "posY": 3,
                 "type": "2x1"
             },
             {
-                "posX": "2",
-                "posY": "0",
+                "posX": 0,
+                "posY": 0,
+                "type": "2x1"
+            },
+            {
+                "posX": 0,
+                "posY": 1,
+                "type": "2x1"
+            },
+            {
+                "posX": 0,
+                "posY": 5,
+                "type": "2x1"
+            },
+            {
+                "posX": 3,
+                "posY": 5,
+                "type": "2x1"
+            },
+            {
+                "posX": 5,
+                "posY": 3,
+                "type": "1x2"
+            },
+            {
+                "posX": 3,
+                "posY": 3,
+                "type": "1x2"
+            },
+            {
+                "posX": 3,
+                "posY": 2,
+                "type": "3x1"
+            }
+        ]
+    },
+    {
+        "level": 8,
+        "length": 6,
+        "data": [
+            {
+                "posX": 1,
+                "posY": 3,
+                "type": "2x1"
+            },
+            {
+                "posX": 0,
+                "posY": 0,
+                "type": "2x1"
+            },
+            {
+                "posX": 4,
+                "posY": 2,
+                "type": "2x1"
+            },
+            {
+                "posX": 0,
+                "posY": 3,
+                "type": "1x2"
+            },
+            {
+                "posX": 4,
+                "posY": 3,
                 "type": "1x3"
             },
             {
-                "posX": "1",
-                "posY": "1",
+                "posX": 2,
+                "posY": 0,
+                "type": "1x3"
+            }
+        ]
+    },
+    {
+        "level": 9,
+        "length": 8,
+        "data": [
+            {
+                "posX": 0,
+                "posY": 3,
+                "type": "2x1"
+            },
+            {
+                "posX": 2,
+                "posY": 2,
+                "type": "2x1"
+            },
+            {
+                "posX": 0,
+                "posY": 4,
+                "type": "2x1"
+            },
+            {
+                "posX": 2,
+                "posY": 4,
+                "type": "1x2"
+            },
+            {
+                "posX": 1,
+                "posY": 0,
+                "type": "1x2"
+            },
+            {
+                "posX": 4,
+                "posY": 2,
                 "type": "1x3"
             },
             {
-                "posX": "0",
-                "posY": "3",
+                "posX": 5,
+                "posY": 0,
                 "type": "1x3"
             },
             {
-                "posX": "3",
-                "posY": "1",
+                "posX": 2,
+                "posY": 0,
+                "type": "3x1"
+            }
+        ]
+    },
+    {
+        "level": 10,
+        "length": 12,
+        "data": [
+            {
+                "posX": 2,
+                "posY": 3,
+                "type": "2x1"
+            },
+            {
+                "posX": 2,
+                "posY": 0,
+                "type": "1x3"
+            },
+            {
+                "posX": 1,
+                "posY": 1,
+                "type": "1x3"
+            },
+            {
+                "posX": 0,
+                "posY": 3,
+                "type": "1x3"
+            },
+            {
+                "posX": 3,
+                "posY": 1,
                 "type": "3x1"
             },
             {
-                "posX": "3",
-                "posY": "2",
+                "posX": 3,
+                "posY": 2,
                 "type": "3x1"
             },
             {
-                "posX": "1",
-                "posY": "4",
+                "posX": 1,
+                "posY": 4,
                 "type": "3x1"
             },
             {
-                "posX": "0",
-                "posY": "0",
+                "posX": 0,
+                "posY": 0,
                 "type": "2x1"
             },
             {
-                "posX": "3",
-                "posY": "0",
+                "posX": 3,
+                "posY": 0,
                 "type": "2x1"
             },
             {
-                "posX": "3",
-                "posY": "5",
+                "posX": 3,
+                "posY": 5,
                 "type": "2x1"
             },
             {
-                "posX": "1",
-                "posY": "5",
+                "posX": 1,
+                "posY": 5,
                 "type": "2x1"
             },
             {
-                "posX": "4",
-                "posY": "3",
+                "posX": 4,
+                "posY": 3,
                 "type": "1x2"
             }
         ]
