@@ -44,8 +44,8 @@ export default class NewClass extends cc.Component
     onLoad()
     {
         this.changeScene(this.cur);
-        this.playRipple();
-        this.playFish();
+        //this.playRipple();
+        //this.playFish();
 
         this.cur_fish_skin = this.fish_skin[2];
     }
@@ -205,31 +205,31 @@ export default class NewClass extends cc.Component
 
     update(dt)
     {
-        //随机生成水波
-        if (this.cur_ripple_time > this.random_ripple_time)
-        {
-            this.playRipple();
-            this.cur_ripple_time = 0;
-            this.random_ripple_time = Math.random() * 120 + 180;
-        }
-        else
-        {
-            this.cur_ripple_time++;
-        }
-        //小鱼转动角度
-        let cur_pos: cc.Vec2 = cc.v2(this.fish_res[this.fish_type].position.x, this.fish_res[this.fish_type].position.y);
-        var angle = this.getAngle(this.pre_pos, cur_pos);
-        this.fish_res[this.fish_type].angle = -angle;
-        this.pre_pos = cur_pos;
-        //随机生成小鱼
-        if (this.cur_fish_time > 8)
-        {
-            this.cur_fish_time = 0;
-            this.playFish();
-        }
-        else
-        {
-            this.cur_fish_time += dt;
-        }
+        // //随机生成水波
+        // if (this.cur_ripple_time > this.random_ripple_time)
+        // {
+        //     this.playRipple();
+        //     this.cur_ripple_time = 0;
+        //     this.random_ripple_time = Math.random() * 120 + 180;
+        // }
+        // else
+        // {
+        //     this.cur_ripple_time++;
+        // }
+        // //小鱼转动角度
+        // let cur_pos: cc.Vec2 = cc.v2(this.fish_res[this.fish_type].position.x, this.fish_res[this.fish_type].position.y);
+        // var angle = this.getAngle(this.pre_pos, cur_pos);
+        // this.fish_res[this.fish_type].angle = -angle;
+        // this.pre_pos = cur_pos;
+        // //随机生成小鱼
+        // if (this.cur_fish_time > 8)
+        // {
+        //     this.cur_fish_time = 0;
+        //     this.playFish();
+        // }
+        // else
+        // {
+        //     this.cur_fish_time += dt;
+        // }
     }
 }

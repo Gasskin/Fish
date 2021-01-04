@@ -13,6 +13,7 @@ export default class block extends cc.Component
     min_bottom: number = null;//能够向下移动的距离
     min_left: number = null;//能够向左移动的距离
     max_right: number = null;//能够向右移动的距离
+    click_sprite: cc.Node = null;
     
     onLoad()
     {
@@ -157,6 +158,7 @@ export default class block extends cc.Component
             //cc.log("start");
             this.default_pos = this.node.getPosition();
             this.getCanMoveDis()
+            this.click_sprite.active = true;
         }, this);
 
         this.node.on(cc.Node.EventType.TOUCH_MOVE, function (event)
@@ -169,98 +171,6 @@ export default class block extends cc.Component
             }
             else
             {
-                {
-                //#region 
-                // //上下移动
-                // if (this.can_up)
-                // {
-                //     //1x2的木块y移动范围是[0,4]，1x3的木块y移动范围是[0,3]
-                //     switch (this.block_type)
-                //     {
-                //         case "1x2":
-                //             //如果是向上移动
-                //             if (move_dis.y > 0)
-                //             {
-                //                 if (this.default_pos.y <= this.getItemPos(0, 4).y - 54)
-                //                 {
-                //                     this.default_pos.y += move_dis.y;
-                //                 }
-                //             }
-                //             //否则是向下移动
-                //             else
-                //             {
-                //                 if (this.default_pos.y >= -334)
-                //                 {
-                //                     this.default_pos.y += move_dis.y;
-                //                 }
-                //             }
-                //             break;
-                //         case "1x3":
-                //             //如果是向上移动
-                //             if (move_dis.y > 0)
-                //             {
-                //                 if (this.default_pos.y <= this.getItemPos(0,3).y-54)
-                //                 {
-                //                     this.default_pos.y += move_dis.y;
-                //                 }
-                //             }
-                //             //否则是向下移动
-                //             else
-                //             {
-                //                 if (this.default_pos.y >= -334)
-                //                 {
-                //                     this.default_pos.y += move_dis.y;
-                //                 }
-                //             }
-                //             break;
-                //     }
-                // }
-                // //左右移动
-                // else
-                // {
-                //     //1x2的木块x移动范围是[0,4]，1x3的木块x移动范围是[0,3]
-                //     switch (this.block_type)
-                //     {
-                //         case "2x1":
-                //             //如果是向右移动
-                //             if (move_dis.x > 0)
-                //             {
-                //                 if (this.default_pos.x <= this.getItemPos(4, 0).x - 54)
-                //                 {
-                //                     this.default_pos.x += move_dis.x;
-                //                 }
-                //             }
-                //             //否则是向左移动
-                //             else
-                //             {
-                //                 if (this.default_pos.x >= -334)
-                //                 {
-                //                     this.default_pos.x += move_dis.x;
-                //                 }
-                //             }
-                //             break;
-                //         case "3x1":
-                //             //如果是向右移动
-                //             if (move_dis.x > 0)
-                //             {
-                //                 if (this.default_pos.x <= this.getItemPos(3, 0).x - 54)
-                //                 {
-                //                     this.default_pos.x += move_dis.x;
-                //                 }
-                //             }
-                //             //否则是向左移动
-                //             else
-                //             {
-                //                 if (this.default_pos.x >= -334)
-                //                 {
-                //                     this.default_pos.x += move_dis.x;
-                //                 }
-                //             }
-                //             break;
-                //     }
-                // }
-                }
-
                 //1x2的木块y移动范围是[0,4]，1x3的木块y移动范围是[0,3]
                 switch (this.block_type)
                 {
@@ -351,6 +261,7 @@ export default class block extends cc.Component
             let final_pos: cc.Vec2 = this.getItemPos(this.cur_index.x, this.cur_index.y);
             //this.node.setPosition(final_pos.x - 54, final_pos.y - 54);
             this.node.parent.parent.getComponent("game").refreshBlockArr();
+            this.click_sprite.active = false;
             cc.tween(this.node)
                 .to(0.2, { position: cc.v2(final_pos.x - 54, final_pos.y - 54) })
                 .start();

@@ -63,7 +63,7 @@ export default class NewClass extends cc.Component {
         //cc.director.getCollisionManager().enabled = true;
 
         this.resetBtnPos();
-        this.addTestItem();
+        //this.addTestItem();
         //cc.log(this.level_json.json);
         
     }
@@ -329,7 +329,6 @@ export default class NewClass extends cc.Component {
     loadLevelJson(level:number)
     {
         this.cur_atlas = this.main_page.getComponent("main").cur_atlas;
-        //cc.log(this.cur_atlas);
 
         this.clearPanel();
 
@@ -372,6 +371,33 @@ export default class NewClass extends cc.Component {
         return cc.v2(-338 + (x + 1) * 4 + x * 108 + 54, -338 + (y + 1) * 4 + y * 108 + 54);
     }
 
+    /**
+     * 设置木块的属性
+     * @param block 想要设置的木块
+     * @param width 高度
+     * @param height 宽度
+     * @param nor 普通图片
+     * @param click 点击时的图片
+     * @param shadow 阴影
+     */
+    setBlock(block: cc.Node, width: number, height: number, nor_fram: cc.SpriteFrame, click_fram: cc.SpriteFrame, shadow_fram: cc.SpriteFrame)
+    {
+
+        let nor: cc.Node = block.getChildByName("nor");
+        let click: cc.Node = block.getChildByName("click");
+        let shadow: cc.Node = block.getChildByName("shadow");
+        block.width = nor.width = click.width = shadow.width = width;
+        block.height = nor.height = click.height = shadow.height = height;
+        shadow.setPosition(-30, -30);
+
+        nor.getComponent(cc.Sprite).spriteFrame = nor_fram;
+        click.getComponent(cc.Sprite).spriteFrame = click_fram;
+        shadow.getComponent(cc.Sprite).spriteFrame = shadow_fram;
+
+        block.getComponent("block").click_sprite = click;
+
+        click.active = false;
+    }
 
     /**
      * 添加一个木块到game_panel
@@ -387,9 +413,12 @@ export default class NewClass extends cc.Component {
         block.setPosition(pos.x - 54, pos.y - 54);
         if (fish)
         {
-            block.width = 220;
-            block.height = 108;
-            block.getComponent(cc.Sprite).spriteFrame = this.main_page.getComponent("main").cur_fish_skin;
+            this.setBlock(
+                block, 220, 108,
+                this.main_page.getComponent("main").cur_fish_skin,
+                this.main_page.getComponent("main").cur_fish_skin,
+                this.cur_atlas.getSpriteFrame("shadow_2x1"));
+            
             block.getComponent("block").init(str, index);
         }
         else
@@ -398,30 +427,43 @@ export default class NewClass extends cc.Component {
             {
                 case "1x2":
                     //cc.log("1x2");
-                    block.width = 108;
-                    block.height = 220;
-                    block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("1x2_nor");
+
+                    this.setBlock(
+                        block, 108, 220,
+                        this.cur_atlas.getSpriteFrame("1x2_nor"),
+                        this.cur_atlas.getSpriteFrame("1x2_click"),
+                        this.cur_atlas.getSpriteFrame("shadow_1x2"));
+                    
                     block.getComponent("block").init(str, index);
                     break;
                 case "1x3":
                     //cc.log("1x3");
-                    block.width = 108;
-                    block.height = 332;
-                    block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("1x3_nor");
+                    this.setBlock(
+                        block, 108, 332,
+                        this.cur_atlas.getSpriteFrame("1x3_nor"),
+                        this.cur_atlas.getSpriteFrame("1x3_click"),
+                        this.cur_atlas.getSpriteFrame("shadow_1x3"));
+                    
                     block.getComponent("block").init(str, index);
                     break;
                 case "2x1":
                     //cc.log("2x1");
-                    block.width = 220;
-                    block.height = 108;
-                    block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("2x1_nor");
+                    this.setBlock(
+                        block, 220, 108,
+                        this.cur_atlas.getSpriteFrame("2x1_nor"),
+                        this.cur_atlas.getSpriteFrame("2x1_click"),
+                        this.cur_atlas.getSpriteFrame("shadow_2x1"));
+                    
                     block.getComponent("block").init(str, index);
                     break;
                 case "3x1":
                     //cc.log("3x1");
-                    block.width = 332;
-                    block.height = 108;
-                    block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("3x1_nor");
+                    this.setBlock(
+                        block, 332, 108,
+                        this.cur_atlas.getSpriteFrame("3x1_nor"),
+                        this.cur_atlas.getSpriteFrame("3x1_click"),
+                        this.cur_atlas.getSpriteFrame("shadow_3x1"));
+                    
                     block.getComponent("block").init(str, index);
                     break
                 default:
