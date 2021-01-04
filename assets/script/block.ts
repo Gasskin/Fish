@@ -268,7 +268,7 @@ export default class block extends cc.Component
                         //如果是向上移动
                         if (move_dis.y > 0)
                         {
-                            if (this.default_pos.y <= Math.min(this.getItemPos(0, 4).y - 54, this.getItemPos(0, this.cur_index.y + this.max_up).y - 54))
+                            if (this.default_pos.y <= Math.min(this.getItemPos(0, 4).y - 54 + 8, this.getItemPos(0, this.cur_index.y + this.max_up).y - 54 + 8))
                             {
                                 this.default_pos.y += move_dis.y;
                             }
@@ -276,7 +276,7 @@ export default class block extends cc.Component
                         //否则是向下移动
                         else
                         {
-                            if (this.default_pos.y >= Math.max(-334, this.getItemPos(0, this.cur_index.y - this.min_bottom).y - 54))
+                            if (this.default_pos.y >= Math.max(-334 - 8, this.getItemPos(0, this.cur_index.y - this.min_bottom).y - 54 - 8))
                             {
                                 this.default_pos.y += move_dis.y;
                             }
@@ -286,7 +286,7 @@ export default class block extends cc.Component
                         //如果是向上移动
                         if (move_dis.y > 0)
                         {
-                            if (this.default_pos.y <= Math.min(this.getItemPos(0, 3).y - 54, this.getItemPos(0, this.cur_index.y + this.max_up).y - 54))
+                            if (this.default_pos.y <= Math.min(this.getItemPos(0, 3).y - 54 + 8, this.getItemPos(0, this.cur_index.y + this.max_up).y - 54 + 8))
                             {
                                 this.default_pos.y += move_dis.y;
                             }
@@ -294,7 +294,7 @@ export default class block extends cc.Component
                         //否则是向下移动
                         else
                         {
-                            if (this.default_pos.y >= Math.max(-334, this.getItemPos(0, this.cur_index.y - this.min_bottom).y - 54))
+                            if (this.default_pos.y >= Math.max(-334 - 8, this.getItemPos(0, this.cur_index.y - this.min_bottom).y - 54 - 8))
                             {
                                 this.default_pos.y += move_dis.y;
                             }
@@ -305,7 +305,7 @@ export default class block extends cc.Component
                         //如果是向右移动
                         if (move_dis.x > 0)
                         {
-                            if (this.default_pos.x <= Math.min(this.getItemPos(4, 0).x - 54, this.getItemPos(this.cur_index.x + this.max_right, 0).x - 54))
+                            if (this.default_pos.x <= Math.min(this.getItemPos(4, 0).x - 54 + 8, this.getItemPos(this.cur_index.x + this.max_right, 0).x - 54 + 8))
                             {
                                 this.default_pos.x += move_dis.x;
                             }
@@ -313,7 +313,7 @@ export default class block extends cc.Component
                         //否则是向左移动
                         else
                         {
-                            if (this.default_pos.x >= Math.max(-334, this.getItemPos(this.cur_index.x - this.min_left, 0).x - 54))
+                            if (this.default_pos.x >= Math.max(-334-8, this.getItemPos(this.cur_index.x - this.min_left, 0).x - 54-8))
                             {
                                 this.default_pos.x += move_dis.x;
                             }
@@ -323,7 +323,7 @@ export default class block extends cc.Component
                         //如果是向右移动
                         if (move_dis.x > 0)
                         {
-                            if (this.default_pos.x <= Math.min(this.getItemPos(3, 0).x - 54, this.getItemPos(this.cur_index.x + this.max_right, 0).x - 54))
+                            if (this.default_pos.x <= Math.min(this.getItemPos(3, 0).x - 54+8, this.getItemPos(this.cur_index.x + this.max_right, 0).x - 54+8))
                             {
                                 this.default_pos.x += move_dis.x;
                             }
@@ -331,7 +331,7 @@ export default class block extends cc.Component
                         //否则是向左移动
                         else
                         {
-                            if (this.default_pos.x >= Math.max(-334, this.getItemPos(this.cur_index.x - this.min_left, 0).x - 54))
+                            if (this.default_pos.x >= Math.max(-334-8, this.getItemPos(this.cur_index.x - this.min_left, 0).x - 54-8))
                             {
                                 this.default_pos.x += move_dis.x;
                             }
