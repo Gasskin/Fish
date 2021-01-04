@@ -79,8 +79,7 @@ export default class NewClass extends cc.Component {
      */
     enterLevel(level: number)
     {
-        
-
+        this.loadLevelJson(level);
 
         for (let i = 0; i < 6; i++)
         {
@@ -88,8 +87,6 @@ export default class NewClass extends cc.Component {
         }
 
         this.refreshBlockArr();
-
-        this.loadLevelJson(level);
         
     }
 
