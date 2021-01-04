@@ -9,6 +9,8 @@ export default class NewClass extends cc.Component
     bg_res: cc.SpriteFrame[] = Array<cc.SpriteFrame>();
     @property({ type: [cc.SpriteAtlas], tooltip: "图集资源，用于切换方块样式" })
     block_atlas: cc.SpriteAtlas[] = new Array<cc.SpriteAtlas>();
+    @property({ type: [cc.SpriteFrame], tooltip: "小鱼的皮肤资源" })
+    fish_skin: cc.SpriteFrame[] = Array<cc.SpriteFrame>();
     @property({ type: [cc.Node], tooltip: "所有的背景修饰资源" })
     bg_decorator: cc.Node[] = Array<cc.Node>();
     @property({ type: cc.Node, tooltip: "水波纹节点" })
@@ -33,6 +35,7 @@ export default class NewClass extends cc.Component
     pre_pos: cc.Vec2 = null;//上一帧的小鱼坐标
 
     cur_atlas: cc.SpriteAtlas = null;
+    cur_fish_skin: cc.SpriteFrame = null;
 
 
     //临时
@@ -43,6 +46,8 @@ export default class NewClass extends cc.Component
         this.changeScene(this.cur);
         this.playRipple();
         this.playFish();
+
+        this.cur_fish_skin = this.fish_skin[2];
     }
 
     start() 

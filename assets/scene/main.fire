@@ -177,7 +177,7 @@
       "array": [
         0,
         0,
-        706.2978433739463,
+        706.0001471413954,
         0,
         0,
         0,
@@ -15674,6 +15674,40 @@
       {
         "__uuid__": "2a16d7cd-b9a4-4229-abf7-b6984c7dfa38"
       }
+    ],
+    "fish_skin": [
+      {
+        "__uuid__": "f1665f9e-5bff-442a-ae0e-d803c36b4c96"
+      },
+      {
+        "__uuid__": "eec6bb24-5d7b-4a30-a0b1-e9b041fbb66d"
+      },
+      {
+        "__uuid__": "09a39b85-426d-4f41-b506-948e5431c0aa"
+      },
+      {
+        "__uuid__": "bf944f26-d32e-46f5-b230-ae1ff90902a1"
+      },
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null
     ],
     "bg_decorator": [
       {

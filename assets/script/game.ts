@@ -344,8 +344,20 @@ export default class NewClass extends cc.Component {
         {
             //cc.log(this.level_json.json[level].data[i].posX);
             //cc.log(this.level_json.json[level].data[i].posY);
-            this.addItem(cc.v2(this.level_json.json[level].data[i].posX,this.level_json.json[level].data[i].posY),
-                        this.level_json.json[level].data[i].type);
+            if (i == 0)
+            {
+                this.addItem(
+                    cc.v2(this.level_json.json[level].data[i].posX, this.level_json.json[level].data[i].posY),
+                    this.level_json.json[level].data[i].type,
+                    true);
+            }
+            else
+            {
+                this.addItem(
+                    cc.v2(this.level_json.json[level].data[i].posX, this.level_json.json[level].data[i].posY),
+                    this.level_json.json[level].data[i].type,
+                    false);
+            }
         }
     }
 
@@ -366,45 +378,55 @@ export default class NewClass extends cc.Component {
      * @param index 木块的数组编号
      * @param str 添加的木块类型
      */
-    addItem(index: cc.Vec2, str: String)
+    addItem(index: cc.Vec2, str: String, fish: boolean)
     {
         let block: cc.Node = cc.instantiate(this.block);
         block.setParent(this.game_panel);
 
         let pos: cc.Vec2 = block.getComponent("block").getItemPos(index.x, index.y);
         block.setPosition(pos.x - 54, pos.y - 54);
-        switch (str)
+        if (fish)
         {
-            case "1x2":
-                //cc.log("1x2");
-                block.width = 108;
-                block.height = 220;
-                block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("1x2_nor");
-                block.getComponent("block").init(str, index);
-                break;
-            case "1x3":
-                //cc.log("1x3");
-                block.width = 108;
-                block.height = 332;
-                block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("1x3_nor");
-                block.getComponent("block").init(str, index);
-                break;
-            case "2x1":
-                //cc.log("2x1");
-                block.width = 220;
-                block.height = 108;
-                block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("2x1_nor");
-                block.getComponent("block").init(str, index);
-                break;
-            case "3x1":
-                //cc.log("3x1");
-                block.width = 332;
-                block.height = 108;
-                block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("3x1_nor");
-                block.getComponent("block").init(str, index);
-                break
-            default:
-                break;
+            block.width = 220;
+            block.height = 108;
+            block.getComponent(cc.Sprite).spriteFrame = this.main_page.getComponent("main").cur_fish_skin;
+            block.getComponent("block").init(str, index);
+        }
+        else
+        {
+            switch (str)
+            {
+                case "1x2":
+                    //cc.log("1x2");
+                    block.width = 108;
+                    block.height = 220;
+                    block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("1x2_nor");
+                    block.getComponent("block").init(str, index);
+                    break;
+                case "1x3":
+                    //cc.log("1x3");
+                    block.width = 108;
+                    block.height = 332;
+                    block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("1x3_nor");
+                    block.getComponent("block").init(str, index);
+                    break;
+                case "2x1":
+                    //cc.log("2x1");
+                    block.width = 220;
+                    block.height = 108;
+                    block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("2x1_nor");
+                    block.getComponent("block").init(str, index);
+                    break;
+                case "3x1":
+                    //cc.log("3x1");
+                    block.width = 332;
+                    block.height = 108;
+                    block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("3x1_nor");
+                    block.getComponent("block").init(str, index);
+                    break
+                default:
+                    break;
+            }
         }
     }
 
