@@ -388,7 +388,7 @@ export default class NewClass extends cc.Component {
         let shadow: cc.Node = block.getChildByName("shadow");
         block.width = nor.width = click.width = shadow.width = width;
         block.height = nor.height = click.height = shadow.height = height;
-        shadow.setPosition(-30, -30);
+        shadow.setPosition(-13, -13);
 
         nor.getComponent(cc.Sprite).spriteFrame = nor_fram;
         click.getComponent(cc.Sprite).spriteFrame = click_fram;
