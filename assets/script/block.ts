@@ -18,7 +18,7 @@ export default class block extends cc.Component
     onLoad()
     {
         this.bindTouchFunc();
-        this.gm_edit = this.node.getParent().getParent().getChildByName("GM").active;
+        this.gm_edit = this.node.parent.parent.parent.getChildByName("GM").active;
         //cc.log(this.gm_edit);
     }
 
@@ -53,6 +53,7 @@ export default class block extends cc.Component
      */
     getCanMoveDis()
     {
+       
         let arr: number[][] = this.node.parent.parent.getComponent("game").block_arr;
         let x: number = (5 - this.cur_index.y);
         let y: number = this.cur_index.x;
@@ -157,8 +158,12 @@ export default class block extends cc.Component
         {
             //cc.log("start");
             this.default_pos = this.node.getPosition();
-            this.getCanMoveDis()
-            this.click_sprite.active = true;
+            //不处于编辑器模式，才需要计算下面两个
+            if (!this.gm_edit)
+            {
+                this.getCanMoveDis()
+                this.click_sprite.active = true;
+            }
         }, this);
 
         this.node.on(cc.Node.EventType.TOUCH_MOVE, function (event)
@@ -261,7 +266,10 @@ export default class block extends cc.Component
             let final_pos: cc.Vec2 = this.getItemPos(this.cur_index.x, this.cur_index.y);
             //this.node.setPosition(final_pos.x - 54, final_pos.y - 54);
             this.node.parent.parent.getComponent("game").refreshBlockArr();
-            this.click_sprite.active = false;
+            if (!this.gm_edit)
+            {
+                this.click_sprite.active = true;
+            }
             cc.tween(this.node)
                 .to(0.2, { position: cc.v2(final_pos.x - 54, final_pos.y - 54) })
                 .start();

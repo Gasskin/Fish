@@ -63,7 +63,7 @@ export default class NewClass extends cc.Component {
         //cc.director.getCollisionManager().enabled = true;
 
         this.resetBtnPos();
-        //this.addTestItem();
+        this.addTestItem();
         //cc.log(this.level_json.json);
         
     }
@@ -79,7 +79,8 @@ export default class NewClass extends cc.Component {
      */
     enterLevel(level: number)
     {
-        this.loadLevelJson(level);
+        
+
 
         for (let i = 0; i < 6; i++)
         {
@@ -87,6 +88,9 @@ export default class NewClass extends cc.Component {
         }
 
         this.refreshBlockArr();
+
+        this.loadLevelJson(level);
+        
     }
 
     /**
@@ -309,6 +313,12 @@ export default class NewClass extends cc.Component {
      */
     addTestItem()
     {
+        if (this.game_page.parent.getChildByName("GM").active == false)
+        {
+            this.item_bg.active = false;
+            return;
+        }
+        this.item_bg.active = true;
         for (let i: number = 0; i < 6; i++)
         {
             for (let j: number = 0; j < 6; j++)
@@ -328,6 +338,7 @@ export default class NewClass extends cc.Component {
      */
     loadLevelJson(level:number)
     {
+
         this.cur_atlas = this.main_page.getComponent("main").cur_atlas;
 
         this.clearPanel();
@@ -339,6 +350,10 @@ export default class NewClass extends cc.Component {
             return;
         }
         //cc.log(size);
+        if (this.game_page.parent.getChildByName("GM").active == true)
+        {
+            return;
+        }
         for (let i: number = 0; i < this.level_json.json[level].length; i++)
         {
             //cc.log(this.level_json.json[level].data[i].posX);
