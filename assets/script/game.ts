@@ -54,7 +54,8 @@ export default class NewClass extends cc.Component {
 
     //局部变量
     close_menu: boolean = false;//描述当前菜单栏的状态（收起/打开）
-    block_arr: number[][] = [];
+    block_arr: number[][] = [];//记录木块位置数据
+    cur_atlas: cc.SpriteAtlas = null;//当前图集资源
 
     onLoad()
     {
@@ -65,20 +66,27 @@ export default class NewClass extends cc.Component {
         this.addTestItem();
         //cc.log(this.level_json.json);
         
-        this.loadLevelJson(0);
+    }
+
+    start() 
+    {
+
+    }
+
+    /**
+     * 进入关卡
+     * @param level 关卡编号
+     */
+    enterLevel(level: number)
+    {
+        this.loadLevelJson(level);
 
         for (let i = 0; i < 6; i++)
         {
             this.block_arr[i] = [];
         }
 
-        //this.resetBlockArr();
         this.refreshBlockArr();
-    }
-
-    start() 
-    {
-
     }
 
     /**
@@ -91,6 +99,7 @@ export default class NewClass extends cc.Component {
         switch (type)
         {
             case "Play":
+                this.enterLevel(1);
                 this.main_page.active = false;
                 this.game_page.active = true;
                 this.idea_btn.active = true;
@@ -319,6 +328,11 @@ export default class NewClass extends cc.Component {
      */
     loadLevelJson(level:number)
     {
+        this.cur_atlas = this.main_page.getComponent("main").cur_atlas;
+        //cc.log(this.cur_atlas);
+
+        this.clearPanel();
+
         let size: number = this.level_json.json.length;
         if (level >= size)
         {
@@ -365,32 +379,51 @@ export default class NewClass extends cc.Component {
                 //cc.log("1x2");
                 block.width = 108;
                 block.height = 220;
-                block.getComponent(cc.Sprite).spriteFrame = this.block_type[0];
+                block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("1x2_nor");
                 block.getComponent("block").init(str, index);
                 break;
             case "1x3":
                 //cc.log("1x3");
                 block.width = 108;
                 block.height = 332;
-                block.getComponent(cc.Sprite).spriteFrame = this.block_type[1];
+                block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("1x3_nor");
                 block.getComponent("block").init(str, index);
                 break;
             case "2x1":
                 //cc.log("2x1");
                 block.width = 220;
                 block.height = 108;
+                block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("2x1_nor");
                 block.getComponent("block").init(str, index);
-                block.getComponent(cc.Sprite).spriteFrame = this.block_type[2];
                 break;
             case "3x1":
                 //cc.log("3x1");
                 block.width = 332;
                 block.height = 108;
+                block.getComponent(cc.Sprite).spriteFrame = this.cur_atlas.getSpriteFrame("3x1_nor");
                 block.getComponent("block").init(str, index);
-                block.getComponent(cc.Sprite).spriteFrame = this.block_type[3];
                 break
             default:
                 break;
+        }
+    }
+
+    /**
+     * 删除木块节点
+     */
+    clearPanel()
+    {
+        for (let child of this.game_panel.children)
+        {
+            // if (child.getComponent("block"))
+            // {
+            //     this.game_panel.removeChild(child);
+            // }
+            if (child.name == "block")
+            {
+                //cc.log(child);
+                child.destroy();
+            }
         }
     }
 

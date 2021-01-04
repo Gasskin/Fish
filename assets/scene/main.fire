@@ -177,7 +177,7 @@
       "array": [
         0,
         0,
-        695.4134738839475,
+        706.2978433739463,
         0,
         0,
         0,
@@ -9651,7 +9651,7 @@
         "__id__": 177
       }
     ],
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 298
@@ -10170,7 +10170,7 @@
         "__id__": 233
       }
     ],
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 283
@@ -15643,6 +15643,38 @@
         "__uuid__": "b7ec4d2f-f87a-432e-916b-c83698195f42"
       }
     ],
+    "block_atlas": [
+      {
+        "__uuid__": "61035ee4-59b7-414e-bc61-fa194efec22b"
+      },
+      {
+        "__uuid__": "3dd81f13-53d7-4bf9-b5cf-9f500843309d"
+      },
+      {
+        "__uuid__": "0e167ee8-3390-4bf1-9e17-7eed889510fd"
+      },
+      {
+        "__uuid__": "1d7d362e-e8ce-462a-a065-13c847358b05"
+      },
+      {
+        "__uuid__": "414c5e48-ed73-45bc-8e92-e45ef4a1bfc2"
+      },
+      {
+        "__uuid__": "e3e6bf14-d673-4426-a63b-15833b3c2bb4"
+      },
+      {
+        "__uuid__": "7737dab6-c2f6-435a-9586-660bf734fe21"
+      },
+      {
+        "__uuid__": "200d65df-b2b6-4f2a-8d04-3907b884749b"
+      },
+      {
+        "__uuid__": "7dc4abfc-8d79-4531-ae59-b72b69feb92a"
+      },
+      {
+        "__uuid__": "2a16d7cd-b9a4-4229-abf7-b6984c7dfa38"
+      }
+    ],
     "bg_decorator": [
       {
         "__id__": 52
@@ -15753,12 +15785,6 @@
         "__id__": 152
       }
     ],
-    "cur_ripple_time": 0,
-    "cur_fish_time": 0,
-    "random_ripple_time": 206.2259766138115,
-    "fish_type": null,
-    "pre_pos": null,
-    "cur": 0,
     "_id": "a8ShwNzGxMY6aSBeG04GMi"
   },
   {

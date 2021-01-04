@@ -7,6 +7,8 @@ export default class NewClass extends cc.Component
     bg_sprite: cc.Sprite = null;   
     @property({ type: [cc.SpriteFrame], tooltip:"所有的背景资源"})
     bg_res: cc.SpriteFrame[] = Array<cc.SpriteFrame>();
+    @property({ type: [cc.SpriteAtlas], tooltip: "图集资源，用于切换方块样式" })
+    block_atlas: cc.SpriteAtlas[] = new Array<cc.SpriteAtlas>();
     @property({ type: [cc.Node], tooltip: "所有的背景修饰资源" })
     bg_decorator: cc.Node[] = Array<cc.Node>();
     @property({ type: cc.Node, tooltip: "水波纹节点" })
@@ -22,18 +24,18 @@ export default class NewClass extends cc.Component
     @property({ type: [cc.Node], tooltip: "途径位置2" })
     pos_end: cc.Node[] = Array<cc.Node>();
 
-    @property({visible:false})
-    cur_ripple_time: number = 0;
-    @property({ visible: false })
-    cur_fish_time: number = 0;
-    @property({ visible: false })
-    random_ripple_time: number = Math.random() * 120 + 180;
-    @property({ visible: false })
-    fish_type: number = null;
-    @property({ visible: false })
-    pre_pos: cc.Vec2 = null;
+    //内部属性
+    random_ripple_time: number = Math.random() * 120 + 180;//下一次生成水波的时间
+    cur_ripple_time: number = 0;//水波生成倒计时
+    
+    cur_fish_time: number = 0;//小鱼生成倒计时
+    fish_type: number = null;//小鱼的类型
+    pre_pos: cc.Vec2 = null;//上一帧的小鱼坐标
 
-    @property({ visible: false })
+    cur_atlas: cc.SpriteAtlas = null;
+
+
+    //临时
     cur: number = 0;
 
     onLoad()
@@ -58,7 +60,6 @@ export default class NewClass extends cc.Component
         {
             case "Play":
                 cc.log("play!");
-                
                 break;
             case "Setting":
                 this.cur = (this.cur + 1) % 10;
@@ -87,6 +88,8 @@ export default class NewClass extends cc.Component
         }
         else
         {
+            //设置图集
+            this.cur_atlas = this.block_atlas[num];
             //设置背景
             for (var i = 0; i < this.bg_res.length; i++)
             {
