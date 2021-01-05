@@ -13,7 +13,8 @@ export default class block extends cc.Component
     min_bottom: number = null;//能够向下移动的距离
     min_left: number = null;//能够向左移动的距离
     max_right: number = null;//能够向右移动的距离
-    click_sprite: cc.Node = null;
+    click_sprite: cc.Node = null;//点击时的sprite
+    is_fish: boolean = false;
     
     onLoad()
     {
@@ -163,6 +164,7 @@ export default class block extends cc.Component
             {
                 this.getCanMoveDis()
                 this.click_sprite.active = true;
+                this.node.getChildByName("shadow").setPosition(-8, -8);
             }
         }, this);
 
@@ -183,7 +185,7 @@ export default class block extends cc.Component
                         //如果是向上移动
                         if (move_dis.y > 0)
                         {
-                            if (this.default_pos.y <= Math.min(this.getItemPos(0, 4).y - 54 + 8, this.getItemPos(0, this.cur_index.y + this.max_up).y - 54 + 8))
+                            if (this.default_pos.y <= Math.min(this.getItemPos(0, 4).y - 54 + 4, this.getItemPos(0, this.cur_index.y + this.max_up).y - 54 + 4))
                             {
                                 this.default_pos.y += move_dis.y;
                             }
@@ -191,7 +193,7 @@ export default class block extends cc.Component
                         //否则是向下移动
                         else
                         {
-                            if (this.default_pos.y >= Math.max(-334 - 8, this.getItemPos(0, this.cur_index.y - this.min_bottom).y - 54 - 8))
+                            if (this.default_pos.y >= Math.max(-334 - 4, this.getItemPos(0, this.cur_index.y - this.min_bottom).y - 54 - 4))
                             {
                                 this.default_pos.y += move_dis.y;
                             }
@@ -201,7 +203,7 @@ export default class block extends cc.Component
                         //如果是向上移动
                         if (move_dis.y > 0)
                         {
-                            if (this.default_pos.y <= Math.min(this.getItemPos(0, 3).y - 54 + 8, this.getItemPos(0, this.cur_index.y + this.max_up).y - 54 + 8))
+                            if (this.default_pos.y <= Math.min(this.getItemPos(0, 3).y - 54 + 4, this.getItemPos(0, this.cur_index.y + this.max_up).y - 54 + 4))
                             {
                                 this.default_pos.y += move_dis.y;
                             }
@@ -209,7 +211,7 @@ export default class block extends cc.Component
                         //否则是向下移动
                         else
                         {
-                            if (this.default_pos.y >= Math.max(-334 - 8, this.getItemPos(0, this.cur_index.y - this.min_bottom).y - 54 - 8))
+                            if (this.default_pos.y >= Math.max(-334 - 4, this.getItemPos(0, this.cur_index.y - this.min_bottom).y - 54 - 4))
                             {
                                 this.default_pos.y += move_dis.y;
                             }
@@ -217,10 +219,11 @@ export default class block extends cc.Component
                         break;
 
                     case "2x1":
+                        
                         //如果是向右移动
                         if (move_dis.x > 0)
                         {
-                            if (this.default_pos.x <= Math.min(this.getItemPos(4, 0).x - 54 + 8, this.getItemPos(this.cur_index.x + this.max_right, 0).x - 54 + 8))
+                            if (this.default_pos.x <= Math.min(this.getItemPos(4, 0).x - 54 + 4, this.getItemPos(this.cur_index.x + this.max_right, 0).x - 54 + 4))
                             {
                                 this.default_pos.x += move_dis.x;
                             }
@@ -228,7 +231,7 @@ export default class block extends cc.Component
                         //否则是向左移动
                         else
                         {
-                            if (this.default_pos.x >= Math.max(-334-8, this.getItemPos(this.cur_index.x - this.min_left, 0).x - 54-8))
+                            if (this.default_pos.x >= Math.max(-334-4, this.getItemPos(this.cur_index.x - this.min_left, 0).x - 54-4))
                             {
                                 this.default_pos.x += move_dis.x;
                             }
@@ -238,7 +241,7 @@ export default class block extends cc.Component
                         //如果是向右移动
                         if (move_dis.x > 0)
                         {
-                            if (this.default_pos.x <= Math.min(this.getItemPos(3, 0).x - 54+8, this.getItemPos(this.cur_index.x + this.max_right, 0).x - 54+8))
+                            if (this.default_pos.x <= Math.min(this.getItemPos(3, 0).x - 54+4, this.getItemPos(this.cur_index.x + this.max_right, 0).x - 54+4))
                             {
                                 this.default_pos.x += move_dis.x;
                             }
@@ -246,7 +249,7 @@ export default class block extends cc.Component
                         //否则是向左移动
                         else
                         {
-                            if (this.default_pos.x >= Math.max(-334-8, this.getItemPos(this.cur_index.x - this.min_left, 0).x - 54-8))
+                            if (this.default_pos.x >= Math.max(-334-4, this.getItemPos(this.cur_index.x - this.min_left, 0).x - 54-4))
                             {
                                 this.default_pos.x += move_dis.x;
                             }
@@ -268,12 +271,28 @@ export default class block extends cc.Component
             this.node.parent.parent.getComponent("game").refreshBlockArr();
             if (!this.gm_edit)
             {
-                this.click_sprite.active = true;
+                this.click_sprite.active = false;
+                this.node.getChildByName("shadow").setPosition(-12, -12);
             }
             cc.tween(this.node)
                 .to(0.2, { position: cc.v2(final_pos.x - 54, final_pos.y - 54) })
                 .start();
             
+            //如果移动到结束地点
+            if (this.is_fish)
+            {
+                let win_pos: cc.Vec2 = this.getItemPos(4, 3);
+                if (this.default_pos.x >= win_pos.x - 112)
+                {
+                    if (this.default_pos.y >= win_pos.y - 112)
+                    {
+                        cc.log("win!");
+                        cc.tween(this.node)
+                            .to(1, { opacity: 0, position: cc.v2(win_pos.x + 200, win_pos.y - 54) })
+                            .start();
+                    }
+                }
+            }
             
         }, this);
     }

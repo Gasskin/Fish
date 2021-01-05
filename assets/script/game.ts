@@ -400,7 +400,7 @@ export default class NewClass extends cc.Component {
         let shadow: cc.Node = block.getChildByName("shadow");
         block.width = nor.width = click.width = shadow.width = width;
         block.height = nor.height = click.height = shadow.height = height;
-        shadow.setPosition(-13, -13);
+        shadow.setPosition(-12, -12);
 
         nor.getComponent(cc.Sprite).spriteFrame = nor_fram;
         click.getComponent(cc.Sprite).spriteFrame = click_fram;
@@ -430,7 +430,7 @@ export default class NewClass extends cc.Component {
                 this.main_page.getComponent("main").cur_fish_skin,
                 this.main_page.getComponent("main").cur_fish_skin,
                 this.cur_atlas.getSpriteFrame("shadow_2x1"));
-            
+            block.getComponent("block").is_fish = true;
             block.getComponent("block").init(str, index);
         }
         else
