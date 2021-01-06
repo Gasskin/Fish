@@ -3,6 +3,8 @@ const {ccclass, property} = cc._decorator;
 @ccclass
 export default class block extends cc.Component
 {
+    game_page: cc.Node = null;
+    over_page: cc.Node = null;
     //内部属性
     default_pos: cc.Vec2 = null;//当前位置
     cur_index: cc.Vec2 = null;//当前坐标
@@ -20,7 +22,8 @@ export default class block extends cc.Component
     {
         this.bindTouchFunc();
         this.gm_edit = this.node.parent.parent.parent.getChildByName("GM").active;
-        //cc.log(this.gm_edit);
+        this.game_page = this.node.parent.parent.parent.getChildByName("Game");
+        this.over_page = this.node.parent.parent.parent.getChildByName("Over");
     }
 
     start() 
@@ -166,6 +169,7 @@ export default class block extends cc.Component
                 this.click_sprite.active = true;
                 this.node.getChildByName("shadow").setPosition(-8, -8);
             }
+            //cc.log(this.game_page.getComponent("game").block_arr);
         }, this);
 
         this.node.on(cc.Node.EventType.TOUCH_MOVE, function (event)
@@ -288,8 +292,24 @@ export default class block extends cc.Component
                     {
                         cc.log("win!");
                         cc.tween(this.node)
-                            .to(1, { opacity: 0, position: cc.v2(win_pos.x + 200, win_pos.y - 54) })
+                            .to(0.5, { opacity: 0, position: cc.v2(win_pos.x + 200, win_pos.y - 54) })
+                            .call(() =>
+                            {
+                                cc.tween(this.game_page)
+                                    .to(0.5, { opacity: 0 })
+                                    .call(() =>
+                                    {
+                                        this.game_page.active = false;
+                                        this.over_page.active = true;
+                                        cc.tween(this.over_page)
+                                            .to(0.5, { opacity: 255 })
+                                            .start();
+                                    })
+                                    .start();
+                            })
                             .start();
+                        
+                        
                     }
                 }
             }

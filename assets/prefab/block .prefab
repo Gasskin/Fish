@@ -186,7 +186,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "95c41247-141f-4db1-9711-9986652f184c"
+      "__id__": 0
     },
     "fileId": "e2hFkEeQhNWbSj+DHFarww",
     "sync": false
@@ -291,7 +291,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "95c41247-141f-4db1-9711-9986652f184c"
+      "__id__": 0
     },
     "fileId": "e2N0JB3hBFqqE3uG1RGsmQ",
     "sync": false
@@ -396,7 +396,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "95c41247-141f-4db1-9711-9986652f184c"
+      "__id__": 0
     },
     "fileId": "45XQGpomZP9YFpx3eCCcLI",
     "sync": false
@@ -439,6 +439,8 @@
       "__id__": 1
     },
     "_enabled": true,
+    "game_page": null,
+    "over_page": null,
     "_id": ""
   },
   {
@@ -447,7 +449,7 @@
       "__id__": 1
     },
     "asset": {
-      "__uuid__": "95c41247-141f-4db1-9711-9986652f184c"
+      "__id__": 0
     },
     "fileId": "",
     "sync": false

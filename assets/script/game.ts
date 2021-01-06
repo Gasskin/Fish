@@ -8,7 +8,8 @@ export default class NewClass extends cc.Component {
     main_page: cc.Node = null;    
     @property({ type: cc.Node, tooltip: "游戏页面" })
     game_page: cc.Node = null;  
-
+    @property({ type: cc.Node, tooltip: "游戏结束页面" })
+    over_page: cc.Node = null;  
     //菜单栏
     @property({ type: cc.Node, tooltip: "菜单按钮" })
     menu_btn: cc.Node = null;  
@@ -56,16 +57,18 @@ export default class NewClass extends cc.Component {
     close_menu: boolean = false;//描述当前菜单栏的状态（收起/打开）
     block_arr: number[][] = [];//记录木块位置数据
     cur_atlas: cc.SpriteAtlas = null;//当前图集资源
+    cur_level: number = 0;
 
     onLoad()
     {
         //碰撞检测
         //cc.director.getCollisionManager().enabled = true;
-
         this.resetBtnPos();
         this.addTestItem();
-        //cc.log(this.level_json.json);
+
+        //cc.log("load");
         
+        //cc.log(this.level_json.json);
     }
 
     start() 
@@ -73,22 +76,6 @@ export default class NewClass extends cc.Component {
 
     }
 
-    /**
-     * 进入关卡
-     * @param level 关卡编号
-     */
-    enterLevel(level: number)
-    {
-        this.loadLevelJson(level);
-
-        for (let i = 0; i < 6; i++)
-        {
-            this.block_arr[i] = [];
-        }
-
-        this.refreshBlockArr();
-        
-    }
 
     /**
      * 按钮事件
@@ -97,10 +84,11 @@ export default class NewClass extends cc.Component {
      */
     btnAction(event: Event, type: String)
     {
+        //cc.log("btn");
         switch (type)
         {
             case "Play":
-                this.enterLevel(1);
+                this.loadLevelJson(0);
                 this.main_page.active = false;
                 this.game_page.active = true;
                 this.idea_btn.active = true;
@@ -114,9 +102,45 @@ export default class NewClass extends cc.Component {
             case "Menu":
                 this.showBtn(this.close_menu);
                 break;
+            case "Level":
+                cc.log("Level");
+                break;
+            case "Replay":
+                cc.log("Replay");
+                break;
+            case "Next":
+                this.nextLevel();
+                cc.log("Next");
+                break;
+            case "Skin":
+                cc.log("Skin");
+                break;
             default:
                 break;
         }
+    }
+
+
+    /**
+     * 下一关
+     */
+    nextLevel()
+    {
+        this.loadLevelJson(this.cur_level + 1);
+
+        cc.log("nextlevel");
+        cc.log(this.block_arr);
+
+        this.game_page.active = true;
+
+        cc.tween(this.game_page)
+            .to(0.5, { opacity: 255 })
+            .start();
+        cc.tween(this.over_page)
+            .to(0.5, { opacity: 0 })
+            .start();    
+        
+        this.over_page.active = false;
     }
 
     /**
@@ -124,6 +148,7 @@ export default class NewClass extends cc.Component {
      */
     resetBlockArr()
     {
+        cc.log("reset");
         for (let i: number = 0; i < 6; i++)
         {
             for (let j: number = 0; j < 6; j++)
@@ -138,6 +163,7 @@ export default class NewClass extends cc.Component {
      */
     refreshBlockArr()
     {
+        //cc.log("refresh");
         this.resetBlockArr();
         let blocks = this.game_panel.getComponentsInChildren("block");
         for (let i = 0; i < blocks.length; i++)
@@ -335,10 +361,18 @@ export default class NewClass extends cc.Component {
      */
     loadLevelJson(level:number)
     {
+        //cc.log("loadLevel");
+        this.cur_level = level;
+
+        for (let i = 0; i < 6; i++)
+        {
+            this.block_arr[i] = [];
+        }
 
         this.cur_atlas = this.main_page.getComponent("main").cur_atlas;
 
-        this.clearPanel();
+        //this.clearPanel();
+        this.game_panel.removeAllChildren();
 
         let size: number = this.level_json.json.length;
         if (level >= size)
@@ -370,6 +404,8 @@ export default class NewClass extends cc.Component {
                     false);
             }
         }
+
+        this.refreshBlockArr();
     }
 
 
@@ -410,6 +446,7 @@ export default class NewClass extends cc.Component {
 
         click.active = false;
     }
+
 
     /**
      * 添加一个木块到game_panel
@@ -489,17 +526,10 @@ export default class NewClass extends cc.Component {
      */
     clearPanel()
     {
-        for (let child of this.game_panel.children)
+        let block = this.game_panel.getComponentsInChildren("block");
+        for (let i: number = 0; i < block.length; i++)
         {
-            // if (child.getComponent("block"))
-            // {
-            //     this.game_panel.removeChild(child);
-            // }
-            if (child.name == "block")
-            {
-                //cc.log(child);
-                child.destroy();
-            }
+            this.game_panel.removeChild(block[i].node);
         }
     }
 
