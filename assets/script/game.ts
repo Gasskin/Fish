@@ -31,7 +31,8 @@ export default class NewClass extends cc.Component {
     setting_btn: cc.Node = null;  
     @property({ type: cc.Label, tooltip: "关卡编号" })
     levle_label: cc.Label = null;
-
+    @property({ type: cc.Node, tooltip: "皮肤滚动栏" })
+    skin_scroll: cc.Node = null;
 
     //提示、重玩
     @property({ type: cc.Node, tooltip: "提示按钮" })
@@ -124,6 +125,23 @@ export default class NewClass extends cc.Component {
                 break;
             default:
                 break;
+        }
+    }
+
+    changeScene(event,Scene: number)
+    {
+        this.main_page.getComponent("main").changeScene(Scene);
+        let btns: cc.Node[] = this.skin_scroll.children;
+        for (let select of btns)
+        {
+            if (select.name !== event.target.name)
+            {
+                select.getChildByName("select").active = false;
+            }
+            else
+            {
+                select.getChildByName("select").active = true;
+            }
         }
     }
 
