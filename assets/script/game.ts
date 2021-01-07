@@ -29,6 +29,8 @@ export default class NewClass extends cc.Component {
     skin_btn: cc.Node = null;  
     @property({ type: cc.Node, tooltip: "设置按钮" })
     setting_btn: cc.Node = null;  
+    @property({ type: cc.Label, tooltip: "关卡编号" })
+    levle_label: cc.Label = null;
 
 
     //提示、重玩
@@ -385,6 +387,7 @@ export default class NewClass extends cc.Component {
         //cc.log("loadLevel");
         this.cur_level = level;
         this.cur_time = 0;
+        this.levle_label.string = (this.cur_level + 1).toString();
 
         for (let i = 0; i < 6; i++)
         {

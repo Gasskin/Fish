@@ -314,6 +314,10 @@ export default class block extends cc.Component
                         this.time[1].string = this.timeToString(spand_time);
                         this.time[3].string = this.timeToString(best_time);
 
+                        this.time[6].string = (this.game_page.getComponent("game").cur_level + 1).toString();
+                        
+                        cc.log(this.time);
+
                         cc.tween(this.node)
                             .to(0.5, { opacity: 0, position: cc.v2(win_pos.x + 200, win_pos.y - 54) })
                             .call(() =>
