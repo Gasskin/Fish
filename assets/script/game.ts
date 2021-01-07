@@ -58,6 +58,7 @@ export default class NewClass extends cc.Component {
     block_arr: number[][] = [];//记录木块位置数据
     cur_atlas: cc.SpriteAtlas = null;//当前图集资源
     cur_level: number = 0;
+    cur_time: number = 0;
 
     onLoad()
     {
@@ -107,13 +108,17 @@ export default class NewClass extends cc.Component {
                 break;
             case "Replay":
                 cc.log("Replay");
+                this.rePlay();
                 break;
             case "Next":
-                this.nextLevel();
                 cc.log("Next");
+                this.nextLevel(this.cur_level + 1);
                 break;
             case "Skin":
                 cc.log("Skin");
+                break;
+            case "overReplay":
+                this.nextLevel(this.cur_level);
                 break;
             default:
                 break;
@@ -124,9 +129,9 @@ export default class NewClass extends cc.Component {
     /**
      * 下一关
      */
-    nextLevel()
+    nextLevel(level:number)
     {
-        this.loadLevelJson(this.cur_level + 1);
+        this.loadLevelJson(level);
 
         cc.log("nextlevel");
         cc.log(this.block_arr);
@@ -356,6 +361,22 @@ export default class NewClass extends cc.Component {
 
 
     /**
+     * 重玩
+     */
+    rePlay()
+    {
+        let blocks = this.game_panel.getComponentsInChildren("block");
+        for (let block of blocks)
+        {
+            let pos: cc.Vec2 = this.getItemPos(block.default_index.x, block.default_index.y);
+            cc.tween(block.node)
+                .to(0.1, { position: cc.v3(pos.x-54, pos.y-54, 0) })
+                .start();
+        }
+    }
+
+
+    /**
      * 读取json数据，家再关卡数据
      * @param level 关卡数
      */
@@ -363,6 +384,7 @@ export default class NewClass extends cc.Component {
     {
         //cc.log("loadLevel");
         this.cur_level = level;
+        this.cur_time = 0;
 
         for (let i = 0; i < 6; i++)
         {
@@ -406,6 +428,12 @@ export default class NewClass extends cc.Component {
         }
 
         this.refreshBlockArr();
+
+        this.schedule(function ()
+        {
+            this.cur_time += 1;
+            cc.log(this.cur_time);
+        }, 1);
     }
 
 

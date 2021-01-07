@@ -8,6 +8,7 @@ export default class block extends cc.Component
     //内部属性
     default_pos: cc.Vec2 = null;//当前位置
     cur_index: cc.Vec2 = null;//当前坐标
+    default_index: cc.Vec2 = null;//默认坐标
     block_type: String = null;//木块类型
     //can_up: boolean;//属于上下移动还是左右移动
     gm_edit: boolean;//GM面板是否打开
@@ -17,6 +18,8 @@ export default class block extends cc.Component
     max_right: number = null;//能够向右移动的距离
     click_sprite: cc.Node = null;//点击时的sprite
     is_fish: boolean = false;
+
+    time: cc.Label[] = null;
     
     onLoad()
     {
@@ -24,6 +27,7 @@ export default class block extends cc.Component
         this.gm_edit = this.node.parent.parent.parent.getChildByName("GM").active;
         this.game_page = this.node.parent.parent.parent.getChildByName("Game");
         this.over_page = this.node.parent.parent.parent.getChildByName("Over");
+        this.time = this.over_page.getComponentsInChildren(cc.Label);
     }
 
     start() 
@@ -38,6 +42,7 @@ export default class block extends cc.Component
     {
         this.block_type = str;
         this.cur_index = index;
+        this.default_index = index;
         //cc.log("type:" + str);
         //cc.log(this.node.width);
         //cc.log(this.node.height);
@@ -291,6 +296,24 @@ export default class block extends cc.Component
                     if (this.default_pos.y >= win_pos.y - 112)
                     {
                         cc.log("win!");
+                        let spand_time: number = this.game_page.getComponent("game").cur_time;
+                        this.game_page.getComponent("game").unscheduleAllCallbacks();
+
+                        let best_time: number = cc.sys.localStorage.getItem(this.game_page.getComponent("game").cur_level);
+                        if (best_time == null)
+                        {
+                            cc.sys.localStorage.setItem(this.game_page.getComponent("game").cur_level, spand_time);
+                            best_time = spand_time;
+                        }
+                        else if (best_time != null && best_time > spand_time)
+                        {
+                            cc.sys.localStorage.setItem(this.game_page.getComponent("game").cur_level, spand_time);
+                            best_time = spand_time;
+                        }
+        
+                        this.time[1].string = this.timeToString(spand_time);
+                        this.time[3].string = this.timeToString(best_time);
+
                         cc.tween(this.node)
                             .to(0.5, { opacity: 0, position: cc.v2(win_pos.x + 200, win_pos.y - 54) })
                             .call(() =>
@@ -315,6 +338,36 @@ export default class block extends cc.Component
             }
             
         }, this);
+    }
+
+    /**
+     * 将时间转为字符串
+     * @param clear 当前时间
+     * @param best 最佳时间
+     */
+    timeToString(time:number):string
+    {
+        let min: number = Math.floor(time / 60);//分钟
+        let sec: number = Math.floor(time % 60);//秒数
+        let min_str: string = null;
+        let sec_str: string = null;
+        if (min < 10)
+        {
+            min_str = "0" + min + ":";
+        }
+        else
+        {
+            min_str = min + ":";
+        }
+        if (sec < 10)
+        {
+            sec_str = "0" + sec;
+        }
+        else
+        {
+            sec_str = sec.toString();
+        }
+        return min_str+sec_str;
     }
 
     /**
