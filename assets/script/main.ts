@@ -29,7 +29,7 @@ export default class NewClass extends cc.Component
     {
         this.changeScene(this.cur);
 
-        this.cur_fish_skin = this.fish_skin[2];
+        this.cur_fish_skin = this.fish_skin[0];
     }
 
     start() 

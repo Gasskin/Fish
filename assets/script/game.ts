@@ -10,6 +10,8 @@ export default class NewClass extends cc.Component {
     game_page: cc.Node = null;  
     @property({ type: cc.Node, tooltip: "游戏结束页面" })
     over_page: cc.Node = null;  
+    @property({ type: cc.Node, tooltip: "皮肤设置" })
+    skin_page: cc.Node = null;
     //菜单栏
     @property({ type: cc.Node, tooltip: "菜单按钮" })
     menu_btn: cc.Node = null;  
@@ -33,6 +35,8 @@ export default class NewClass extends cc.Component {
     levle_label: cc.Label = null;
     @property({ type: cc.Node, tooltip: "皮肤滚动栏" })
     skin_scroll: cc.Node = null;
+    @property({ type: cc.Node, tooltip: "鱼滚动栏" })
+    fish_scroll: cc.Node = null;
 
     //提示、重玩
     @property({ type: cc.Node, tooltip: "提示按钮" })
@@ -62,6 +66,7 @@ export default class NewClass extends cc.Component {
     cur_atlas: cc.SpriteAtlas = null;//当前图集资源
     cur_level: number = 0;
     cur_time: number = 0;
+    pre_page: string = null;
 
     onLoad()
     {
@@ -80,6 +85,23 @@ export default class NewClass extends cc.Component {
 
     }
 
+    /**
+     * 选择场景皮肤还是鱼皮肤
+     * @param event 默认事件
+     */
+    changeToggle(event)
+    {
+        if (event.node.name == "toggle1")
+        {
+            this.skin_scroll.active = true;
+            this.fish_scroll.active = false;
+        }
+        else if (event.node.name == "toggle2")
+        {
+            this.skin_scroll.active = false;
+            this.fish_scroll.active = true;
+        }
+    }
 
     /**
      * 按钮事件
@@ -119,6 +141,30 @@ export default class NewClass extends cc.Component {
                 break;
             case "Skin":
                 cc.log("Skin");
+                if (this.main_page.active == true)
+                {
+                    this.main_page.active = false;
+                    this.skin_page.active = true;
+                    this.pre_page = "main";
+                }
+                else if (this.game_page.active = true)
+                {
+                    this.game_page.active = false;
+                    this.skin_page.active = true;
+                    this.pre_page = "game";
+                }
+                break;
+            case "Back":
+                this.skin_page.active = false;
+                if (this.pre_page == "main")
+                {
+                    this.main_page.active = true;
+                }
+                else
+                {
+                    this.loadLevelJson(this.cur_level);
+                    this.game_page.active = true;
+                }
                 break;
             case "overReplay":
                 this.nextLevel(this.cur_level);
@@ -128,6 +174,31 @@ export default class NewClass extends cc.Component {
         }
     }
 
+    changeFish(event)
+    {
+        let children = this.fish_scroll.children;
+        for (let i = 0; i < children.length; i++)
+        {
+            let child = children[i].getChildByName("select");
+            if (child == event.target)
+            {
+                child.getChildByName("Background").active = true;
+                child.getChildByName("un_select").active = false;
+                this.main_page.getComponent("main").cur_fish_skin = child.parent.getComponent(cc.Sprite).spriteFrame;
+            }
+            else
+            {
+                child.getChildByName("Background").active = false;
+                child.getChildByName("un_select").active = true;
+            }
+        }
+    }
+
+    /**
+     * 更换场景
+     * @param event 默认事件
+     * @param Scene 场景编号
+     */
     changeScene(event,Scene: number)
     {
         this.main_page.getComponent("main").changeScene(Scene);
@@ -385,6 +456,7 @@ export default class NewClass extends cc.Component {
      */
     rePlay()
     {
+        this.cur_time = 0;
         let blocks = this.game_panel.getComponentsInChildren("block");
         for (let block of blocks)
         {
